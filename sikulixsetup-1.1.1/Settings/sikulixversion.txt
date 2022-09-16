@@ -1,0 +1,11 @@
+sikulixvmaj=1
+sikulixvmin=1
+sikulixvsub=1
+sikulixbeta=0
+sikulixbuild=2017-03-29_10:41
+sikulixdev=development
+sikulixvused=1.1.1
+sikulixvproject=1.1.1
+sikulixvjython=2.7.0
+sikulixvjruby=9.0.1.0
+sikulixlocalrepo=/Users/Shared/Jenkins/.m2/repository

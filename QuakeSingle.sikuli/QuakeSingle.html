@@ -1,0 +1,242 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>QuakeSingle.sikuli</h2> <a href="QuakeSingle.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="cmt">#setThrowException(False)</span>
+<span class="kw">import</span> java.awt.Toolkit
+<span class="kw">import</span> gc
+faultCounter = <span class="dig">0</span>
+imgPlay = Pattern(<img src="1515451952989.png" />).similar(<span class="dig">0.96</span>)
+imgPlayOffs = Pattern(<img src="1515451952989.png" />).similar(<span class="dig">0.96</span>).targetOffset(<span class="dig">57</span>,-<span class="dig">1</span>)
+imgCustom = Pattern(<img src="1515452091080.png" />).similar(<span class="dig">0.96</span>)
+imgCustomOffs = Pattern(<img src="1515452091080.png" />).similar(<span class="dig">0.96</span>).targetOffset(<span class="dig">46</span>,<span class="dig">0</span>)
+imgModeSelector = Pattern(<img src="1515453054069.png" />).similar(<span class="dig">0.80</span>).targetOffset(-<span class="dig">35</span>,-<span class="dig">35</span>)
+imgModeSelectorOffs = Pattern(<img src="1515453054069.png" />).similar(<span class="dig">0.80</span>).targetOffset(<span class="dig">30</span>,-<span class="dig">37</span>)
+imgModeOpn = Pattern(<img src="1515452286237.png" />).targetOffset(-<span class="dig">49</span>,<span class="dig">51</span>)
+imgModeOpnOffs = Pattern(<img src="1515452286237.png" />).targetOffset(<span class="dig">2</span>,<span class="dig">51</span>)
+imgDmIcon = <img src="1515452334096.png" />
+imgModeOK = <img src="1515452349051.png" />
+imgModeOKOffs = Pattern(<img src="1515452349051.png" />).targetOffset(<span class="dig">27</span>,-<span class="dig">2</span>)
+imgStart = <img src="1515452390720.png" />
+imgStartOffs = Pattern(<img src="1515452390720.png" />).targetOffset(<span class="dig">63</span>,-<span class="dig">3</span>)
+imgOKError = <img src="1515495530809.png" />
+imgOKErrorOffs = Pattern(<img src="1515495530809.png" />).targetOffset(<span class="dig">44</span>,-<span class="dig">4</span>)
+imgTeamView = Pattern(<img src="1515455367862.png" />).targetOffset(<span class="dig">215</span>,<span class="dig">76</span>)
+imgLogin = Pattern(<img src="1515509104373.png" />).targetOffset(-<span class="dig">97</span>,<span class="dig">1</span>)
+imgLoginOffs = Pattern(<img src="1515509104373.png" />).targetOffset(<span class="dig">30</span>,<span class="dig">10</span>)
+imgPassword = Pattern(<img src="1515509226400.png" />).targetOffset(-<span class="dig">76</span>,<span class="dig">7</span>)
+imgPasswordOffs = Pattern(<img src="1515509226400.png" />).targetOffset(-<span class="dig">7</span>,<span class="dig">9</span>)
+
+imgLoginBtn = <img src="1515509033316.png" />
+imgLoginBtnOffs = Pattern(<img src="1515509033316.png" />).targetOffset(<span class="dig">57</span>,-<span class="dig">6</span>)
+imgClose = <img src="1515592164379.png" />
+imgCloseOffs = Pattern(<img src="1515592164379.png" />).targetOffset(<span class="dig">33</span>,-<span class="dig">1</span>)
+imgPlayBL =<img src="1515542207936.png" />
+
+
+
+<span class="kw">while</span> True:
+    gc.collect()
+    faultCounter += <span class="dig">1</span>
+    <span class="kw">if</span> exists(imgPlay):
+        <span class="cmt">#App.focus("WordPad")</span>
+        <span class="skw">click</span>(ImgPlay)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(imgPlayOffs)
+        hover(imgPlay)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseUp()
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+    <span class="kw">if</span> exists (imgCustom):
+        <span class="skw">click</span>(imgCustom)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(imgCustomOffs)
+        hover(imgCustom)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseUp()
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="kw">if</span> exists (imgModeSelector):
+            <span class="skw">click</span>(imgModeSelector)
+            <span class="skw">wait</span>(<span class="dig">1</span>)
+            <span class="skw">click</span>(imgModeSelectorOffs)
+            <span class="skw">wait</span>(<span class="dig">1</span>)
+            <span class="kw">if</span> exists(imgModeSelector):
+                hover(imgModeSelector)
+                <span class="skw">wait</span>(<span class="dig">1</span>)
+                mouseDown(Button.LEFT)
+                <span class="skw">wait</span>(<span class="dig">1</span>)
+                mouseUp()
+                <span class="skw">wait</span>(<span class="dig">1</span>)
+    <span class="kw">if</span> exists (imgModeOpn):
+        <span class="skw">click</span>(imgModeOpn)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(imgModeOpnOffs)
+        hover(imgModeOpn)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseUp()
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+    <span class="kw">if</span> exists(imgDmIcon):
+        <span class="skw">click</span>(imgModeOk)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(imgModeOkOffs)
+        hover(imgModeOk)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseUp()
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+
+    <span class="kw">if</span> exists(imgStart):
+        <span class="cmt">#popup(str(faultCounter))</span>
+        faultCounter = <span class="dig">0</span>
+        <span class="cmt">#App.focus("WordPad")</span>
+        <span class="skw">click</span>(imgStart)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">click</span>(imgStartOffs)
+        hover(imgStart)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        mouseUp()
+    <span class="kw">if</span> exists(imgOKError): <span class="cmt">#разные ошибки</span>
+        <span class="skw">click</span>(imgOKError)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">click</span>(imgOKErrorOffs)
+        hover(imgOKError)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        mouseUp()
+
+    <span class="kw">if</span> exists(imgTeamView):
+        App.focus(<span class="str">"GPU-Z"</span>)
+        <span class="skw">click</span>(imgTeamView)
+    <span class="kw">if</span> exists(imgLoginBtn): <span class="cmt">#выкинуло из аккаунта</span>
+        <span class="skw">click</span>(imgLogin)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(imgLoginOffs)
+        hover(imgLogin)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseUp()
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">type</span>(<span class="str">"JcJet"</span>)
+        <span class="skw">click</span>(imgPassword)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(imgPasswordOffs)
+        hover(imgPassword)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseUp()
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">type</span>(<span class="str">"!!!"</span>)
+        <span class="skw">click</span>(imgLoginButton)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(imgLoginButtonOffs)
+        hover(imgLoginButton)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseUp()
+        <span class="skw">wait</span>(<span class="dig">60</span>)
+    <span class="kw">if</span> exists(imgClose): <span class="cmt">#разные сообщения и ошибки</span>
+        <span class="skw">click</span>(imgClose)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(imgCloseOffs)
+        hover(imgClose)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseDown(Button.LEFT)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        mouseUp()
+    <span class="kw">if</span> faultCounter == <span class="dig">35</span>:
+        App.close(<span class="str">"Quake Champions"</span>)
+        <span class="skw">wait</span>(<span class="dig">30</span>)
+        App.focus(<span class="str">"BethesdaNetLauncher"</span>)
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="skw">click</span>(imgPlayBL)
+        <span class="skw">wait</span>(<span class="dig">250</span>)
+        App.focus(<span class="str">"Quake Champions"</span>)
+    <span class="kw">if</span> faultCounter &gt; <span class="dig">50</span>:
+        <span class="kw">while</span> True:
+            <span class="skw">wait</span>(<span class="dig">5</span>)
+            java.awt.Toolkit.getDefaultToolkit().beep()
+    gc.collect()
+</pre>
+</body>
+</html>

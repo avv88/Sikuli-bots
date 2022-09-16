@@ -1,0 +1,1341 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>doff.sikuli</h2> <a href="doff.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="cmt">#interface scale = 1; doff window width = min; 1080p res; notifications - hidden in bottom right corner
+</span><span class="cmt">#items:
+</span><span class="cmt">#Shield Battery (Research Ant-Psionic Shields)
+</span><span class="cmt">#Antigens, Medical supplies (a lot), and other goods
+</span><span class="cmt">#Science and medical - a lot of small tasks, good for botting. 
+</span><span class="cmt">#Military, Development - mostly medium and long times
+</span><span class="cmt">#Colony/Development - ? (mostly okay), colonists farm
+</span>Settings.MinSimilarity=<span class="dig">0.85</span>
+<span class="kw">import</span> gc
+<span class="kw">import</span> time
+<span class="kw">from</span> random <span class="kw">import</span> randrange
+Debug.on(<span class="dig">3</span>)
+Debug.setLogFile(<span class="str">"C://Sikuli_Log.txt"</span>)
+USE_LOGOFF = True
+ADM_RUN_CONSTANTLY = True
+WHICH_ADM = <span class="dig">1</span>
+COARSE_DOFF = False
+adm_button = Pattern(<img src="adm_button.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">270</span>,-<span class="dig">1</span>)
+adm_clicker = Pattern(<img src="adm_clicker.png" />).similar(<span class="dig">0.91</span>)
+adm_fed = Pattern(<img src="adm_faction.png" />).similar(<span class="dig">0.87</span>)
+adm_kdf = Pattern(<img src="adm_kdf.png" />).similar(<span class="dig">0.90</span>)
+adm_rom = Pattern(<img src="adm_rom.png" />).similar(<span class="dig">0.91</span>)
+adm_fer = Pattern(<img src="adm_fer.png" />).similar(<span class="dig">0.91</span>)
+adm_plan = Pattern(<img src="adm_plan.png" />).similar(<span class="dig">0.85</span>)
+adm_close_ships = Pattern(<img src="adm_close_ships.png" />).targetOffset(<span class="dig">56</span>,-<span class="dig">8</span>)
+adm_select1 = Pattern(<img src="adm_select1.png" />).similar(<span class="dig">0.85</span>).targetOffset(<span class="dig">25</span>,-<span class="dig">88</span>)
+adm_select2 = Pattern(<img src="adm_select2.png" />).similar(<span class="dig">0.85</span>).targetOffset(<span class="dig">30</span>,-<span class="dig">24</span>)
+adm_select3 = Pattern(<img src="adm_select3.png" />).targetOffset(<span class="dig">37</span>,<span class="dig">40</span>)
+imgTaskbar = Pattern(<img src="imgTaskbar.png" />).similar(<span class="dig">0.85</span>)
+adm_assign = <img src="adm_assign.png" />
+adm_good_chance = Pattern(<img src="adm_good_chance.png" />).similar(<span class="dig">0.90</span>)
+adm_okay_chance = Pattern(<img src="adm_okay_chance.png" />).similar(<span class="dig">0.90</span>)
+adm_begin = Pattern(<img src="adm_begin.png" />).similar(<span class="dig">0.90</span>)
+adm_complete1 = Pattern(<img src="adm_complete1.png" />).similar(<span class="dig">0.90</span>)
+adm_complete2 = Pattern(<img src="adm_complete2.png" />).similar(<span class="dig">0.85</span>)
+admiralties = []
+adm = []
+TOD = Pattern(<img src="TOD.png" />).similar(<span class="dig">0.85</span>).targetOffset(<span class="dig">0</span>,<span class="dig">37</span>)
+TOD_fed = <img src="TOD_fed.png" />
+TOD_kdf = <img src="TOD_kdf.png" />
+TOD_rom = <img src="TOD_rom.png" />
+TOD_fer = <img src="TOD_fer.png" />
+TOD_tier = []
+TOD_tier.append(<img src="1591711035319.png" />)
+TOD_tier.append(<img src="1591711056491.png" />)
+TOD_tier.append(<img src="1591711073448.png" />)
+TOD_tier.append(<img src="1591711087010.png" />)
+TOD_tier.append(<img src="1591711108604.png" />)
+TOD_tier.append(<img src="1591711122869.png" />)
+TOD_tier.append(<img src="1591711147852.png" />)
+TOD_tier.append(<img src="1591720279207.png" />)
+TOD_tier.append(<img src="1591713351030.png" />)
+adm_coarse = []
+adm_coarse.append(Pattern(<img src="1591710038841.png" />).targetOffset(-<span class="dig">40</span>,<span class="dig">28</span>))
+adm_coarse.append(Pattern(<img src="1591703702565.png" />).targetOffset(-<span class="dig">38</span>,<span class="dig">28</span>))
+adm_coarse.append(Pattern(<img src="1591703840694.png" />).targetOffset(-<span class="dig">43</span>,<span class="dig">27</span>))
+adm_coarse.append(Pattern(<img src="1591703969702.png" />).targetOffset(-<span class="dig">51</span>,<span class="dig">28</span>))
+adm_coarse.append(Pattern(<img src="1591703804973.png" />).targetOffset(-<span class="dig">29</span>,<span class="dig">29</span>))
+adm_coarse.append(Pattern(<img src="1591703866205.png" />).targetOffset(-<span class="dig">48</span>,<span class="dig">30</span>))
+adm_coarse.append(Pattern(<img src="1591710085801.png" />).targetOffset(-<span class="dig">26</span>,<span class="dig">28</span>))
+adm_coarse.append(Pattern(<img src="1591703739085.png" />).targetOffset(-<span class="dig">48</span>,<span class="dig">26</span>))
+adm_coarse.append(Pattern(<img src="1591703756862.png" />).targetOffset(-<span class="dig">25</span>,<span class="dig">30</span>))
+adm_coarse.append(Pattern(<img src="1591703778988.png" />).targetOffset(-<span class="dig">50</span>,<span class="dig">27</span>))
+<span class="cmt">#Adm touple: image, duration, eng, tac, sci, reward, faction
+</span><span class="cmt">#FED
+</span>adm.append((Pattern(<img src="1591628153301.png" />).targetOffset(<span class="dig">325</span>,<span class="dig">52</span>),<span class="dig">3</span>,<span class="dig">45</span>,<span class="dig">45</span>,<span class="dig">105</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591628261642.png" />).targetOffset(<span class="dig">295</span>,<span class="dig">50</span>),<span class="dig">3</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="dig">125</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591628336712.png" />).targetOffset(<span class="dig">391</span>,<span class="dig">54</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">45</span>,<span class="dig">20</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591628437916.png" />).targetOffset(<span class="dig">373</span>,<span class="dig">50</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">25</span>,<span class="dig">15</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591628492671.png" />).targetOffset(<span class="dig">370</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">60</span>,<span class="dig">30</span>,<span class="dig">30</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591628559508.png" />).targetOffset(<span class="dig">310</span>,<span class="dig">49</span>),<span class="dig">0</span>,<span class="dig">30</span>,<span class="dig">30</span>,<span class="dig">80</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591628603876.png" />).targetOffset(<span class="dig">338</span>,<span class="dig">49</span>),<span class="dig">2</span>,<span class="dig">55</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591628649377.png" />).targetOffset(<span class="dig">309</span>,<span class="dig">51</span>),<span class="dig">4</span>,<span class="dig">175</span>,<span class="dig">90</span>,<span class="dig">90</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591628700261.png" />).targetOffset(<span class="dig">375</span>,<span class="dig">52</span>),<span class="dig">4</span>,<span class="dig">190</span>,<span class="dig">95</span>,<span class="dig">95</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591628743904.png" />).targetOffset(<span class="dig">322</span>,<span class="dig">55</span>),<span class="dig">2</span>,<span class="dig">70</span>,<span class="dig">110</span>,<span class="dig">70</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591628810122.png" />).targetOffset(<span class="dig">325</span>,<span class="dig">50</span>),<span class="dig">4</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591700827764.png" />).targetOffset(<span class="dig">317</span>,<span class="dig">51</span>),<span class="dig">1</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591628868301.png" />).targetOffset(<span class="dig">276</span>,<span class="dig">50</span>),<span class="dig">2</span>,<span class="dig">40</span>,<span class="dig">40</span>,<span class="dig">95</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591628906453.png" />).targetOffset(<span class="dig">304</span>,<span class="dig">55</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591628944791.png" />).targetOffset(<span class="dig">296</span>,<span class="dig">53</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="dig">55</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591628982441.png" />).targetOffset(<span class="dig">325</span>,<span class="dig">52</span>),<span class="dig">0</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="dig">20</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591629016958.png" />).targetOffset(<span class="dig">352</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">70</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591703281029.png" />).targetOffset(<span class="dig">343</span>,<span class="dig">50</span>),<span class="dig">1</span>,<span class="dig">50</span>,<span class="dig">50</span>,<span class="dig">110</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591703341477.png" />).targetOffset(<span class="dig">352</span>,<span class="dig">52</span>),<span class="dig">130</span>,<span class="dig">80</span>,<span class="dig">80</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591629053616.png" />).targetOffset(<span class="dig">328</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">10</span>,<span class="dig">20</span>,<span class="dig">10</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591629086422.png" />).targetOffset(<span class="dig">399</span>,<span class="dig">55</span>),<span class="dig">0</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591629128893.png" />).targetOffset(<span class="dig">379</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">50</span>,<span class="dig">50</span>,<span class="dig">50</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591629163194.png" />).targetOffset(<span class="dig">305</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">95</span>,<span class="dig">65</span>,<span class="dig">65</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591680806806.png" />).targetOffset(<span class="dig">348</span>,<span class="dig">54</span>),<span class="dig">0</span>,<span class="dig">80</span>,<span class="dig">130</span>,<span class="dig">80</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591629208170.png" />).targetOffset(<span class="dig">314</span>,<span class="dig">48</span>),<span class="dig">0</span>,<span class="dig">60</span>,<span class="dig">85</span>,<span class="dig">60</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591629333198.png" />).targetOffset(<span class="dig">313</span>,<span class="dig">53</span>),<span class="dig">2</span>,<span class="dig">45</span>,<span class="dig">85</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591630774358.png" />).targetOffset(<span class="dig">291</span>,<span class="dig">50</span>),<span class="dig">3</span>,<span class="dig">65</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591630811629.png" />).targetOffset(<span class="dig">351</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">45</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591630861757.png" />).targetOffset(<span class="dig">309</span>,<span class="dig">52</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="dig">35</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591630896775.png" />).targetOffset(<span class="dig">320</span>,<span class="dig">50</span>),<span class="dig">1</span>,<span class="dig">55</span>,<span class="dig">55</span>,<span class="dig">55</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591630932685.png" />).targetOffset(<span class="dig">327</span>,<span class="dig">51</span>),<span class="dig">1</span>,<span class="dig">100</span>,<span class="dig">100</span>,<span class="dig">100</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591631009758.png" />).targetOffset(<span class="dig">318</span>,<span class="dig">50</span>),<span class="dig">1</span>,<span class="dig">35</span>,<span class="dig">35</span>,<span class="dig">90</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591631077070.png" />).targetOffset(<span class="dig">329</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">35</span>,<span class="dig">70</span>,<span class="dig">35</span>,<span class="str">"exp"</span>))
+adm.append((Pattern(<img src="1591631153453.png" />).targetOffset(<span class="dig">307</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">20</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="str">"exp"</span>))
+<span class="cmt">#KDF
+</span>adm.append((Pattern(<img src="1591631243070.png" />).targetOffset(<span class="dig">329</span>,<span class="dig">54</span>),<span class="dig">3</span>,<span class="dig">45</span>,<span class="dig">45</span>,<span class="dig">105</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591631289165.png" />).targetOffset(<span class="dig">335</span>,<span class="dig">50</span>),<span class="dig">3</span>,<span class="dig">90</span>,<span class="dig">90</span>,<span class="dig">160</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591631322218.png" />).targetOffset(<span class="dig">347</span>,<span class="dig">52</span>),<span class="dig">3</span>,<span class="dig">95</span>,<span class="dig">160</span>,<span class="dig">95</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591631358286.png" />).targetOffset(<span class="dig">359</span>,<span class="dig">48</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591631414954.png" />).targetOffset(<span class="dig">317</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">25</span>,<span class="dig">15</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591631458049.png" />).targetOffset(<span class="dig">424</span>,<span class="dig">54</span>),<span class="dig">0</span>,<span class="dig">75</span>,<span class="dig">75</span>,<span class="dig">75</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591631529608.png" />).targetOffset(<span class="dig">305</span>,<span class="dig">54</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="dig">35</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591631560744.png" />).targetOffset(<span class="dig">380</span>,<span class="dig">52</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">45</span>,<span class="dig">20</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591631595229.png" />).targetOffset(<span class="dig">333</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">95</span>,<span class="dig">65</span>,<span class="dig">65</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591631635903.png" />).targetOffset(<span class="dig">342</span>,<span class="dig">50</span>),<span class="dig">4</span>,<span class="dig">125</span>,<span class="dig">80</span>,<span class="dig">80</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591631665591.png" />).targetOffset(<span class="dig">313</span>,<span class="dig">52</span>),<span class="dig">2</span>,<span class="dig">55</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591691236447.png" />).targetOffset(<span class="dig">327</span>,<span class="dig">52</span>),<span class="dig">2</span>,<span class="dig">85</span>,<span class="dig">85</span>,<span class="dig">150</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591631718703.png" />).targetOffset(<span class="dig">293</span>,<span class="dig">51</span>),<span class="dig">4</span>,<span class="dig">45</span>,<span class="dig">45</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591631761831.png" />).targetOffset(<span class="dig">323</span>,<span class="dig">53</span>),<span class="dig">4</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591631901903.png" />).targetOffset(<span class="dig">315</span>,<span class="dig">55</span>),<span class="dig">1</span>,<span class="dig">50</span>,<span class="dig">50</span>,<span class="dig">110</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591631964078.png" />).targetOffset(<span class="dig">318</span>,<span class="dig">50</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591631999528.png" />).targetOffset(<span class="dig">342</span>,<span class="dig">50</span>),<span class="dig">2</span>,<span class="dig">35</span>,<span class="dig">35</span>,<span class="dig">35</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632028968.png" />).targetOffset(<span class="dig">335</span>,<span class="dig">52</span>),<span class="dig">3</span>,<span class="dig">85</span>,<span class="dig">85</span>,<span class="dig">85</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632063206.png" />).targetOffset(<span class="dig">298</span>,<span class="dig">55</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="dig">55</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591632099214.png" />).targetOffset(<span class="dig">307</span>,<span class="dig">56</span>),<span class="dig">0</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="dig">20</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591632127758.png" />).targetOffset(<span class="dig">311</span>,<span class="dig">47</span>),<span class="dig">0</span>,<span class="dig">30</span>,<span class="dig">30</span>,<span class="dig">80</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591632200158.png" />).targetOffset(<span class="dig">351</span>,<span class="dig">49</span>),<span class="dig">0</span>,<span class="dig">60</span>,<span class="dig">30</span>,<span class="dig">30</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591632243788.png" />).targetOffset(<span class="dig">361</span>,<span class="dig">55</span>),<span class="dig">1</span>,<span class="dig">75</span>,<span class="dig">75</span>,<span class="dig">75</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632346038.png" />).targetOffset(<span class="dig">397</span>,<span class="dig">55</span>),<span class="dig">0</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632374356.png" />).targetOffset(<span class="dig">305</span>,<span class="dig">49</span>),<span class="dig">1</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632399045.png" />).targetOffset(<span class="dig">319</span>,<span class="dig">49</span>),<span class="dig">2</span>,<span class="dig">145</span>,<span class="dig">85</span>,<span class="dig">85</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632431292.png" />).targetOffset(<span class="dig">289</span>,<span class="dig">54</span>),<span class="dig">0</span>,<span class="dig">60</span>,<span class="dig">85</span>,<span class="dig">60</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632461623.png" />).targetOffset(<span class="dig">315</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">30</span>,<span class="dig">60</span>,<span class="dig">30</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632488398.png" />).targetOffset(<span class="dig">316</span>,<span class="dig">52</span>),<span class="dig">2</span>,<span class="dig">145</span>,<span class="dig">85</span>,<span class="dig">85</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632517696.png" />).targetOffset(<span class="dig">315</span>,<span class="dig">55</span>),<span class="dig">2</span>,<span class="dig">45</span>,<span class="dig">85</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591632546739.png" />).targetOffset(<span class="dig">316</span>,<span class="dig">50</span>),<span class="dig">3</span>,<span class="dig">60</span>,<span class="dig">60</span>,<span class="dig">60</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591673185943.png" />).targetOffset(<span class="dig">327</span>,<span class="dig">56</span>),<span class="dig">0</span>,<span class="dig">45</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632578387.png" />).targetOffset(<span class="dig">319</span>,<span class="dig">49</span>),<span class="dig">1</span>,<span class="dig">55</span>,<span class="dig">55</span>,<span class="dig">55</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591632614496.png" />).targetOffset(<span class="dig">335</span>,<span class="dig">48</span>),<span class="dig">0</span>,<span class="dig">35</span>,<span class="dig">70</span>,<span class="dig">35</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591691184616.png" />).targetOffset(<span class="dig">319</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">20</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632644462.png" />).targetOffset(<span class="dig">295</span>,<span class="dig">53</span>),<span class="dig">1</span>,<span class="dig">40</span>,<span class="dig">80</span>,<span class="dig">40</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591632671685.png" />).targetOffset(<span class="dig">342</span>,<span class="dig">53</span>),<span class="dig">3</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">60</span>,<span class="str">"dil"</span>))
+<span class="cmt">#ROM
+</span>adm.append((Pattern(<img src="1591632703599.png" />).targetOffset(<span class="dig">342</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">95</span>,<span class="dig">65</span>,<span class="dig">65</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591632741775.png" />).targetOffset(<span class="dig">301</span>,<span class="dig">53</span>),<span class="dig">3</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="dig">125</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632794158.png" />).targetOffset(<span class="dig">321</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">25</span>,<span class="dig">15</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591632873519.png" />).targetOffset(<span class="dig">352</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591632909878.png" />).targetOffset(<span class="dig">297</span>,<span class="dig">51</span>),<span class="dig">2</span>,<span class="dig">80</span>,<span class="dig">80</span>,<span class="dig">80</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591632935927.png" />).targetOffset(<span class="dig">299</span>,<span class="dig">52</span>),<span class="dig">10</span>,<span class="dig">10</span>,<span class="dig">20</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591632961159.png" />).targetOffset(<span class="dig">317</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="dig">35</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591632985393.png" />).targetOffset(<span class="dig">338</span>,<span class="dig">48</span>),<span class="dig">2</span>,<span class="dig">55</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633021462.png" />).targetOffset(<span class="dig">296</span>,<span class="dig">50</span>),<span class="dig">4</span>,<span class="dig">45</span>,<span class="dig">45</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591633056471.png" />).targetOffset(<span class="dig">293</span>,<span class="dig">52</span>),<span class="dig">3</span>,<span class="dig">65</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591633091271.png" />).targetOffset(<span class="dig">329</span>,<span class="dig">49</span>),<span class="dig">1</span>,<span class="dig">90</span>,<span class="dig">40</span>,<span class="dig">40</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591633131324.png" />).targetOffset(<span class="dig">352</span>,<span class="dig">52</span>),<span class="dig">0</span>,<span class="dig">80</span>,<span class="dig">80</span>,<span class="dig">130</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633167641.png" />).targetOffset(<span class="dig">283</span>,<span class="dig">53</span>),<span class="dig">1</span>,<span class="dig">50</span>,<span class="dig">50</span>,<span class="dig">110</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591633203554.png" />).targetOffset(<span class="dig">329</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">70</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591633236960.png" />).targetOffset(<span class="dig">289</span>,<span class="dig">55</span>),<span class="dig">2</span>,<span class="dig">40</span>,<span class="dig">40</span>,<span class="dig">95</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591633265293.png" />).targetOffset(<span class="dig">301</span>,<span class="dig">52</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="dig">55</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591633299894.png" />).targetOffset(<span class="dig">369</span>,<span class="dig">48</span>),<span class="dig">0</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633335767.png" />).targetOffset(<span class="dig">337</span>,<span class="dig">53</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">45</span>,<span class="dig">20</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591633367630.png" />).targetOffset(<span class="dig">392</span>,<span class="dig">50</span>),<span class="dig">1</span>,<span class="dig">75</span>,<span class="dig">75</span>,<span class="dig">75</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633401499.png" />).targetOffset(<span class="dig">318</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">30</span>,<span class="dig">60</span>,<span class="dig">30</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633436378.png" />).targetOffset(<span class="dig">292</span>,<span class="dig">47</span>),<span class="dig">1</span>,<span class="dig">65</span>,<span class="dig">100</span>,<span class="dig">65</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633469887.png" />).targetOffset(<span class="dig">331</span>,<span class="dig">49</span>),<span class="dig">0</span>,<span class="dig">30</span>,<span class="dig">30</span>,<span class="dig">80</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591633500124.png" />).targetOffset(<span class="dig">302</span>,<span class="dig">47</span>),<span class="dig">3</span>,<span class="dig">60</span>,<span class="dig">60</span>,<span class="dig">60</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591633529569.png" />).targetOffset(<span class="dig">348</span>,<span class="dig">52</span>),<span class="dig">2</span>,<span class="dig">45</span>,<span class="dig">85</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591633569497.png" />).targetOffset(<span class="dig">334</span>,<span class="dig">51</span>),<span class="dig">1</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633603465.png" />).targetOffset(<span class="dig">313</span>,<span class="dig">49</span>),<span class="dig">0</span>,<span class="dig">35</span>,<span class="dig">70</span>,<span class="dig">35</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633639531.png" />).targetOffset(<span class="dig">315</span>,<span class="dig">51</span>),<span class="dig">1</span>,<span class="dig">35</span>,<span class="dig">35</span>,<span class="dig">90</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633682177.png" />).targetOffset(<span class="dig">332</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">45</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633723713.png" />).targetOffset(<span class="dig">363</span>,<span class="dig">51</span>),<span class="dig">1</span>,<span class="dig">55</span>,<span class="dig">55</span>,<span class="dig">55</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591633755718.png" />).targetOffset(<span class="dig">334</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">80</span>,<span class="dig">130</span>,<span class="dig">80</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591633798712.png" />).targetOffset(<span class="dig">312</span>,<span class="dig">52</span>),<span class="dig">0</span>,<span class="dig">20</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591672176418.png" />).targetOffset(<span class="dig">331</span>,<span class="dig">50</span>),<span class="dig">3</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">60</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591672213225.png" />).targetOffset(<span class="dig">368</span>,<span class="dig">52</span>),<span class="dig">3</span>,<span class="dig">90</span>,<span class="dig">90</span>,<span class="dig">160</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591672240161.png" />).targetOffset(<span class="dig">291</span>,<span class="dig">50</span>),<span class="dig">0</span>,<span class="dig">80</span>,<span class="dig">35</span>,<span class="dig">35</span>,<span class="str">"mat"</span>))
+<span class="cmt">#FER
+</span>adm.append((Pattern(<img src="1591672277815.png" />).targetOffset(<span class="dig">301</span>,<span class="dig">55</span>),<span class="dig">3</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="dig">125</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591672310831.png" />).targetOffset(<span class="dig">315</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">25</span>,<span class="dig">15</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591678368852.png" />).targetOffset(<span class="dig">293</span>,<span class="dig">50</span>),<span class="dig">0</span>,<span class="dig">75</span>,<span class="dig">75</span>,<span class="dig">75</span>,<span class="str">"dil"</span>))
+adm.append((<img src="1591672337848.png" />,<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="dig">35</span>,<span class="str">"cred"</span>))
+adm.append((Pattern(<img src="1591678332907.png" />).targetOffset(<span class="dig">382</span>,<span class="dig">50</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">45</span>,<span class="dig">20</span>,<span class="str">"lat"</span>))
+adm.append((Pattern(<img src="1591682372227.png" />).targetOffset(<span class="dig">299</span>,<span class="dig">50</span>),<span class="dig">0</span>,<span class="dig">80</span>,<span class="dig">130</span>,<span class="dig">80</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672361529.png" />).targetOffset(<span class="dig">302</span>,<span class="dig">52</span>),<span class="dig">1</span>,<span class="dig">85</span>,<span class="dig">145</span>,<span class="dig">85</span>,<span class="str">"lat"</span>))
+adm.append((Pattern(<img src="1591672389464.png" />).targetOffset(<span class="dig">312</span>,<span class="dig">50</span>),<span class="dig">2</span>,<span class="dig">55</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672421594.png" />).targetOffset(<span class="dig">303</span>,<span class="dig">56</span>),<span class="dig">4</span>,<span class="dig">45</span>,<span class="dig">45</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591672448273.png" />).targetOffset(<span class="dig">283</span>,<span class="dig">52</span>),<span class="dig">3</span>,<span class="dig">85</span>,<span class="dig">85</span>,<span class="dig">85</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591672475025.png" />).targetOffset(<span class="dig">330</span>,<span class="dig">48</span>),<span class="dig">0</span>,<span class="dig">20</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672501499.png" />).targetOffset(<span class="dig">295</span>,<span class="dig">51</span>),<span class="dig">3</span>,<span class="dig">65</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="str">"lat"</span>))
+adm.append((Pattern(<img src="1591672533287.png" />).targetOffset(<span class="dig">284</span>,<span class="dig">49</span>),<span class="dig">2</span>,<span class="dig">120</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672565162.png" />).targetOffset(<span class="dig">306</span>,<span class="dig">53</span>),<span class="dig">3</span>,<span class="dig">110</span>,<span class="dig">110</span>,<span class="dig">110</span>,<span class="str">"lat"</span>))
+adm.append((Pattern(<img src="1591672592798.png" />).targetOffset(<span class="dig">338</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">45</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672621392.png" />).targetOffset(<span class="dig">340</span>,<span class="dig">50</span>),<span class="dig">2</span>,<span class="dig">35</span>,<span class="dig">35</span>,<span class="dig">35</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672659651.png" />).targetOffset(<span class="dig">314</span>,<span class="dig">50</span>),<span class="dig">2</span>,<span class="dig">40</span>,<span class="dig">40</span>,<span class="dig">95</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591672683329.png" />).targetOffset(<span class="dig">304</span>,<span class="dig">53</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="dig">55</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591679602689.png" />).targetOffset(<span class="dig">293</span>,<span class="dig">52</span>),<span class="dig">0</span>,<span class="dig">30</span>,<span class="dig">30</span>,<span class="dig">80</span>,<span class="str">"lat"</span>))
+adm.append((Pattern(<img src="1591672721824.png" />).targetOffset(<span class="dig">336</span>,<span class="dig">51</span>),<span class="dig">0</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="dig">20</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591672748824.png" />).targetOffset(<span class="dig">349</span>,<span class="dig">49</span>),<span class="dig">0</span>,<span class="dig">60</span>,<span class="dig">30</span>,<span class="dig">30</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591672772851.png" />).targetOffset(<span class="dig">393</span>,<span class="dig">52</span>),<span class="dig">0</span>,<span class="dig">50</span>,<span class="dig">50</span>,<span class="dig">50</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672797754.png" />).targetOffset(<span class="dig">397</span>,<span class="dig">52</span>),<span class="dig">0</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="dig">10</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672821544.png" />).targetOffset(<span class="dig">326</span>,<span class="dig">53</span>),<span class="dig">1</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672848671.png" />).targetOffset(<span class="dig">311</span>,<span class="dig">49</span>),<span class="dig">2</span>,<span class="dig">45</span>,<span class="dig">85</span>,<span class="dig">45</span>,<span class="str">"?"</span>))
+adm.append((Pattern(<img src="1591672876520.png" />).targetOffset(<span class="dig">304</span>,<span class="dig">52</span>),<span class="dig">1</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="dig">55</span>,<span class="str">"mat"</span>))
+adm.append((Pattern(<img src="1591672901504.png" />).targetOffset(<span class="dig">395</span>,<span class="dig">53</span>),<span class="dig">0</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="dig">15</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672929680.png" />).targetOffset(<span class="dig">368</span>,<span class="dig">53</span>),<span class="dig">2</span>,<span class="dig">80</span>,<span class="dig">80</span>,<span class="dig">80</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591672951648.png" />).targetOffset(<span class="dig">325</span>,<span class="dig">47</span>),<span class="dig">1</span>,<span class="dig">55</span>,<span class="dig">55</span>,<span class="dig">55</span>,<span class="str">"lat"</span>))
+adm.append((Pattern(<img src="1591672979256.png" />).targetOffset(<span class="dig">363</span>,<span class="dig">54</span>),<span class="dig">1</span>,<span class="dig">100</span>,<span class="dig">100</span>,<span class="dig">100</span>,<span class="str">"lat"</span>))
+adm.append((Pattern(<img src="1591673006264.png" />).targetOffset(<span class="dig">288</span>,<span class="dig">49</span>),<span class="dig">0</span>,<span class="dig">80</span>,<span class="dig">35</span>,<span class="dig">35</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591673040161.png" />).targetOffset(<span class="dig">283</span>,<span class="dig">49</span>),<span class="dig">4</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="dig">70</span>,<span class="str">"lat"</span>))
+adm.append((Pattern(<img src="1591673063904.png" />).targetOffset(<span class="dig">336</span>,<span class="dig">53</span>),<span class="dig">3</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">6</span>,<span class="str">"dil"</span>))
+adm.append((Pattern(<img src="1591673091136.png" />).targetOffset(<span class="dig">288</span>,<span class="dig">50</span>),<span class="dig">0</span>,<span class="dig">25</span>,<span class="dig">25</span>,<span class="dig">70</span>,<span class="str">"mat"</span>))
+
+adm_ships = []
+adm_ships.append((<img src="1592656378162.png" />,<span class="dig">3</span>,<span class="dig">2</span>,<span class="dig">1</span>,<span class="dig">0</span>))
+adm_ships.append((<img src="1592656389530.png" />,<span class="dig">5</span>,<span class="dig">3</span>,<span class="dig">2</span>,<span class="dig">0</span>))
+adm_ships.append((<img src="1592656415551.png" />,<span class="dig">4</span>,<span class="dig">1</span>,<span class="dig">1</span>,<span class="dig">0</span>))
+adm_ships.append((<img src="1592656432386.png" />,<span class="dig">6</span>,<span class="dig">4</span>,<span class="dig">4</span>,<span class="dig">0</span>))
+adm_ships.append((<img src="1592656441777.png" />,<span class="dig">2</span>,<span class="dig">2</span>,<span class="dig">2</span>,<span class="dig">0</span>))
+adm_ships.append((<img src="1592656453619.png" />,<span class="dig">4</span>,<span class="dig">3</span>,<span class="dig">3</span>,<span class="dig">0</span>))
+adm_ships.append((<img src="1592656480482.png" />,<span class="dig">32</span>,<span class="dig">52</span>,<span class="dig">14</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656493864.png" />,<span class="dig">35</span>,<span class="dig">57</span>,<span class="dig">16</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1592656514722.png" />,<span class="dig">37</span>,<span class="dig">62</span>,<span class="dig">18</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1592656566232.png" />,<span class="dig">20</span>,<span class="dig">55</span>,<span class="dig">15</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656765856.png" />,<span class="dig">35</span>,<span class="dig">51</span>,<span class="dig">19</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656591209.png" />,<span class="dig">52</span>,<span class="dig">17</span>,<span class="dig">21</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656602976.png" />,<span class="dig">25</span>,<span class="dig">52</span>,<span class="dig">28</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656611353.png" />,<span class="dig">20</span>,<span class="dig">54</span>,<span class="dig">24</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656621674.png" />,<span class="dig">24</span>,<span class="dig">54</span>,<span class="dig">20</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656629705.png" />,<span class="dig">20</span>,<span class="dig">50</span>,<span class="dig">20</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592657504236.png" />,<span class="dig">51</span>,<span class="dig">31</span>,<span class="dig">23</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592657549966.png" />,<span class="dig">20</span>,<span class="dig">56</span>,<span class="dig">29</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656638815.png" />,<span class="dig">33</span>,<span class="dig">51</span>,<span class="dig">21</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656671570.png" />,<span class="dig">18</span>,<span class="dig">63</span>,<span class="dig">24</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1593147711207.png" />,<span class="dig">20</span>,<span class="dig">15</span>,<span class="dig">55</span>,<span class="dig">12</span>))
+adm_ships.append((<img src="1592656692744.png" />,<span class="dig">66</span>,<span class="dig">29</span>,<span class="dig">40</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1592656702968.png" />,<span class="dig">43</span>,<span class="dig">29</span>,<span class="dig">72</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1592656715592.png" />,<span class="dig">31</span>,<span class="dig">31</span>,<span class="dig">73</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1592656728076.png" />,<span class="dig">28</span>,<span class="dig">28</span>,<span class="dig">79</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1592708700210.png" />,<span class="dig">30</span>,<span class="dig">27</span>,<span class="dig">78</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1592658006063.png" />,<span class="dig">43</span>,<span class="dig">17</span>,<span class="dig">30</span>,<span class="dig">8</span>))
+adm_ships.append((<img src="1593358111261.png" />,<span class="dig">49</span>,<span class="dig">45</span>,<span class="dig">41</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1593358150519.png" />,<span class="dig">62</span>,<span class="dig">42</span>,<span class="dig">31</span>,<span class="dig">18</span>))
+adm_ships.append((<img src="1593358169695.png" />,<span class="dig">23</span>,<span class="dig">61</span>,<span class="dig">51</span>,<span class="dig">18</span>))
+adm_fleet = []
+adm_fleet.append((<img src="1592656528048.png" />,<span class="dig">12</span>,<span class="dig">36</span>,<span class="dig">12</span>,<span class="dig">8</span>))
+adm_fleet.append((<img src="1592656553388.png" />,<span class="dig">17</span>,<span class="dig">47</span>,<span class="dig">11</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592656681149.png" />,<span class="dig">37</span>,<span class="dig">15</span>,<span class="dig">23</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592708808226.png" />,<span class="dig">47</span>,<span class="dig">21</span>,<span class="dig">15</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592709488730.png" />,<span class="dig">14</span>,<span class="dig">50</span>,<span class="dig">19</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592746404180.png" />,<span class="dig">50</span>,<span class="dig">12</span>,<span class="dig">21</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592709426594.png" />,<span class="dig">50</span>,<span class="dig">21</span>,<span class="dig">12</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592656578473.png" />,<span class="dig">16</span>,<span class="dig">31</span>,<span class="dig">36</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592656749736.png" />,<span class="dig">21</span>,<span class="dig">12</span>,<span class="dig">50</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592656876864.png" />,<span class="dig">44</span>,<span class="dig">17</span>,<span class="dig">22</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592656931239.png" />,<span class="dig">45</span>,<span class="dig">18</span>,<span class="dig">20</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592656975480.png" />,<span class="dig">50</span>,<span class="dig">19</span>,<span class="dig">14</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657014584.png" />,<span class="dig">13</span>,<span class="dig">42</span>,<span class="dig">28</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657062134.png" />,<span class="dig">21</span>,<span class="dig">47</span>,<span class="dig">15</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657090973.png" />,<span class="dig">14</span>,<span class="dig">47</span>,<span class="dig">22</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657114934.png" />,<span class="dig">15</span>,<span class="dig">47</span>,<span class="dig">21</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657158238.png" />,<span class="dig">14</span>,<span class="dig">49</span>,<span class="dig">20</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657194991.png" />,<span class="dig">21</span>,<span class="dig">50</span>,<span class="dig">12</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657234886.png" />,<span class="dig">12</span>,<span class="dig">50</span>,<span class="dig">21</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657274790.png" />,<span class="dig">17</span>,<span class="dig">52</span>,<span class="dig">14</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657301751.png" />,<span class="dig">22</span>,<span class="dig">17</span>,<span class="dig">44</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657328520.png" />,<span class="dig">21</span>,<span class="dig">12</span>,<span class="dig">50</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657348614.png" />,<span class="dig">12</span>,<span class="dig">21</span>,<span class="dig">50</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592657383744.png" />,<span class="dig">15</span>,<span class="dig">18</span>,<span class="dig">50</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1592656467719.png" />,<span class="dig">30</span>,<span class="dig">48</span>,<span class="dig">12</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1593417123065.png" />,<span class="dig">29</span>,<span class="dig">16</span>,<span class="dig">15</span>,<span class="dig">8</span>))
+adm_fleet.append((<img src="1593417815429.png" />,<span class="dig">36</span>,<span class="dig">12</span>,<span class="dig">12</span>,<span class="dig">8</span>))
+adm_fleet.append((<img src="1593417145923.png" />,<span class="dig">14</span>,<span class="dig">32</span>,<span class="dig">14</span>,<span class="dig">8</span>))
+adm_fleet.append((Pattern(<img src="1593417234890.png" />).similar(<span class="dig">0.90</span>),<span class="dig">12</span>,<span class="dig">12</span>,<span class="dig">36</span>,<span class="dig">8</span>))
+adm_fleet.append((Pattern(<img src="1593417274065.png" />).similar(<span class="dig">0.90</span>),<span class="dig">40</span>,<span class="dig">20</span>,<span class="dig">15</span>,<span class="dig">12</span>))
+adm_fleet.append((Pattern(<img src="1593417340330.png" />).similar(<span class="dig">0.90</span>),<span class="dig">47</span>,<span class="dig">11</span>,<span class="dig">17</span>,<span class="dig">12</span>))
+adm_fleet.append((Pattern(<img src="1593417367915.png" />).similar(<span class="dig">0.90</span>),<span class="dig">47</span>,<span class="dig">17</span>,<span class="dig">11</span>,<span class="dig">12</span>))
+adm_fleet.append((Pattern(<img src="1593417399827.png" />).similar(<span class="dig">0.90</span>),<span class="dig">18</span>,<span class="dig">44</span>,<span class="dig">13</span>,<span class="dig">12</span>))
+adm_fleet.append((Pattern(<img src="1593417545842.png" />).similar(<span class="dig">0.90</span>),<span class="dig">11</span>,<span class="dig">47</span>,<span class="dig">17</span>,<span class="dig">12</span>))
+adm_fleet.append((Pattern(<img src="1593417637508.png" />).similar(<span class="dig">0.90</span>),<span class="dig">15</span>,<span class="dig">20</span>,<span class="dig">40</span>,<span class="dig">12</span>))
+adm_fleet.append((Pattern(<img src="1593417679701.png" />).similar(<span class="dig">0.90</span>),<span class="dig">17</span>,<span class="dig">11</span>,<span class="dig">47</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1593417892000.png" />,<span class="dig">11</span>,<span class="dig">17</span>,<span class="dig">47</span>,<span class="dig">12</span>))
+adm_fleet.append((<img src="1594227984596.png" />,<span class="dig">60</span>,<span class="dig">22</span>,<span class="dig">26</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594228028795.png" />,<span class="dig">21</span>,<span class="dig">21</span>,<span class="dig">66</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594472157545.png" />,<span class="dig">70</span>,<span class="dig">19</span>,<span class="dig">19</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594472185347.png" />,<span class="dig">26</span>,<span class="dig">60</span>,<span class="dig">22</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594472210031.png" />,<span class="dig">16</span>,<span class="dig">68</span>,<span class="dig">24</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594472243567.png" />,<span class="dig">63</span>,<span class="dig">40</span>,<span class="dig">23</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1595311081721.png" />,<span class="dig">60</span>,<span class="dig">37</span>,<span class="dig">29</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594228063164.png" />,<span class="dig">73</span>,<span class="dig">24</span>,<span class="dig">20</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594228085881.png" />,<span class="dig">73</span>,<span class="dig">20</span>,<span class="dig">24</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594228106039.png" />,<span class="dig">77</span>,<span class="dig">20</span>,<span class="dig">20</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594228139052.png" />,<span class="dig">22</span>,<span class="dig">66</span>,<span class="dig">29</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594277694659.png" />,<span class="dig">26</span>,<span class="dig">66</span>,<span class="dig">25</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594646478789.png" />,<span class="dig">22</span>,<span class="dig">60</span>,<span class="dig">44</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594277756925.png" />,<span class="dig">31</span>,<span class="dig">62</span>,<span class="dig">33</span>,<span class="dig">100</span>))
+adm_fleet.append((<img src="1594532797752.png" />,<span class="dig">70</span>,<span class="dig">36</span>,<span class="dig">20</span>,<span class="dig">100</span>))
+rnd_completeImg = Pattern(<img src="rnd_completeImg.png" />).similar(<span class="dig">0.91</span>)
+rnd_noslot = Pattern(<img src="rnd_noslots.png" />).similar(<span class="dig">0.98</span>)
+rnd_startTask = Pattern(<img src="rnd_startTask.png" />).similar(<span class="dig">0.90</span>)
+rnd_button = Pattern(<img src="rnd_button.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">351</span>,-<span class="dig">1</span>)
+rnd_canIcon = Pattern(<img src="rnd_canIcon.png" />).similar(<span class="dig">0.95</span>)
+rnd_beaIcon = Pattern(<img src="rnd_beaIcon.png" />).similar(<span class="dig">0.90</span>)
+rnd_groIcon = Pattern(<img src="rnd_groIcon.png" />).similar(<span class="dig">0.90</span>)
+rnd_kitIcon = Pattern(<img src="rnd_kitIcon.png" />).similar(<span class="dig">0.90</span>)
+rnd_engIcon = Pattern(<img src="rnd_engIcon.png" />).similar(<span class="dig">0.90</span>)
+rnd_proIcon = Pattern(<img src="rnd_proIcon.png" />).similar(<span class="dig">0.95</span>)
+rnd_sciIcon = Pattern(<img src="rnd_sciIcon.png" />).similar(<span class="dig">0.90</span>)
+rnd_shiIcon = Pattern(<img src="rnd_shiIcon.png" />).similar(<span class="dig">0.90</span>)
+rnd_canStartImg = Pattern(<img src="rnd_canStartImg.png" />).targetOffset(<span class="dig">399</span>,<span class="dig">64</span>)
+rnd_engStartImg = Pattern(<img src="rnd_engStartImg.png" />).targetOffset(<span class="dig">385</span>,<span class="dig">76</span>)
+rnd_groStartImg = Pattern(<img src="rnd_groStartImg.png" />).targetOffset(<span class="dig">364</span>,<span class="dig">77</span>)
+rnd_kitStartImg = Pattern(<img src="rnd_kitStartImg.png" />).targetOffset(<span class="dig">353</span>,<span class="dig">76</span>)
+rnd_proStartImg = Pattern(<img src="rnd_proStartImg.png" />).targetOffset(<span class="dig">385</span>,<span class="dig">69</span>)
+rnd_sciStartImg = Pattern(<img src="rnd_sciStartImg.png" />).targetOffset(<span class="dig">402</span>,<span class="dig">66</span>)
+rnd_shiStartImg = Pattern(<img src="rnd_shiStartImg.png" />).targetOffset(<span class="dig">395</span>,<span class="dig">69</span>)
+rnd_beaStartImg = Pattern(<img src="rnd_beaStartImg.png" />).targetOffset(<span class="dig">399</span>,<span class="dig">67</span>)
+rnds = []
+rnds.append((rnd_canIcon, rnd_canStartImg))
+rnds.append((rnd_engIcon, rnd_engStartImg))
+rnds.append((rnd_groIcon, rnd_groStartImg))
+rnds.append((rnd_kitIcon, rnd_kitStartImg))
+rnds.append((rnd_proIcon, rnd_proStartImg))
+rnds.append((rnd_sciIcon, rnd_sciStartImg))
+rnds.append((rnd_shiIcon, rnd_shiStartImg))
+rnds.append((rnd_beaIcon, rnd_beaStartImg))
+rep_click_btn = Pattern(<img src="rep_click_btn.png" />).similar(<span class="dig">0.85</span>).targetOffset(<span class="dig">314</span>,-<span class="dig">1</span>)
+rep_first_rep = Pattern(<img src="rep_first_rep.png" />).similar(<span class="dig">0.89</span>)
+rep_disc = Pattern(<img src="rep_disc.png" />).similar(<span class="dig">0.90</span>)
+rep_omega = Pattern(<img src="rep_omega.png" />).similar(<span class="dig">0.90</span>)
+rep_nukara = Pattern(<img src="rep_nukara.png" />).similar(<span class="dig">0.90</span>)
+rep_romulus = Pattern(<img src="rep_romulus.png" />).similar(<span class="dig">0.90</span>)
+rep_dyson = Pattern(<img src="rep_dyson.png" />).similar(<span class="dig">0.90</span>)
+rep_8472 = Pattern(<img src="rep_8472.png" />).similar(<span class="dig">0.90</span>)
+rep_delta = Pattern(<img src="rep_delta.png" />).similar(<span class="dig">0.91</span>)
+rep_iconian = Pattern(<img src="rep_iconian.png" />).similar(<span class="dig">0.90</span>)
+rep_terran = Pattern(<img src="rep_terran.png" />).similar(<span class="dig">0.90</span>)
+rep_temporal = Pattern(<img src="rep_temporal.png" />).similar(<span class="dig">0.90</span>)
+rep_lukari = Pattern(<img src="rep_lukari.png" />).similar(<span class="dig">0.90</span>)
+rep_comp = Pattern(<img src="rep_comp.png" />).similar(<span class="dig">0.90</span>)
+rep_gamma = Pattern(<img src="rep_gamma.png" />).similar(<span class="dig">0.91</span>)
+rep_collectImg = Pattern(<img src="rep_collectImg.png" />).similar(<span class="dig">0.90</span>)
+rep_selectImg = Pattern(<img src="rep_selectImg.png" />).similar(<span class="dig">0.90</span>)
+rep_upgrade = Pattern(<img src="rep_upgrade.png" />).similar(<span class="dig">0.88</span>)
+rep_fill_all = Pattern(<img src="rep_fill_all.png" />).similar(<span class="dig">0.90</span>)
+rep_fill_yes = Pattern(<img src="rep_fill_yes.png" />).similar(<span class="dig">0.90</span>).targetOffset(-<span class="dig">3</span>,<span class="dig">80</span>)
+rep_disc_daily = Pattern(<img src="rep_disc_daily.png" />).targetOffset(<span class="dig">295</span>,<span class="dig">283</span>)
+rep_omega_daily = Pattern(<img src="rep_omega_daily.png" />).targetOffset(<span class="dig">224</span>,<span class="dig">306</span>)
+rep_nukara_daily = Pattern(<img src="rep_nukara_daily.png" />).targetOffset(<span class="dig">202</span>,<span class="dig">272</span>)
+rep_romulus_daily = Pattern(<img src="rep_romulus_daily.png" />).targetOffset(<span class="dig">223</span>,<span class="dig">273</span>)
+rep_dyson_daily = Pattern(<img src="rep_dyson_daily.png" />).targetOffset(<span class="dig">318</span>,<span class="dig">265</span>)
+rep_8472_daily = Pattern(<img src="rep_8472_daily.png" />).targetOffset(<span class="dig">289</span>,<span class="dig">270</span>)
+rep_delta_daily = Pattern(<img src="rep_delta_daily.png" />).targetOffset(<span class="dig">302</span>,<span class="dig">261</span>)
+rep_iconian_daily = Pattern(<img src="rep_iconian_daily.png" />).targetOffset(<span class="dig">283</span>,<span class="dig">280</span>)
+rep_terran_daily = Pattern(<img src="rep_terran_daily.png" />).targetOffset(<span class="dig">293</span>,<span class="dig">279</span>)
+rep_temporal_daily = Pattern(<img src="rep_temporal_daily.png" />).targetOffset(<span class="dig">257</span>,<span class="dig">279</span>)
+rep_lukari_daily = Pattern(<img src="rep_lukari_daily.png" />).targetOffset(<span class="dig">247</span>,<span class="dig">279</span>)
+rep_comp_daily = Pattern(<img src="rep_comp_daily.png" />).targetOffset(<span class="dig">271</span>,<span class="dig">277</span>)
+rep_comp_convert = Pattern(<img src="rep_comp_convert.png" />).targetOffset(<span class="dig">261</span>,<span class="dig">213</span>)
+rep_gamma_daily = Pattern(<img src="rep_gamma_daily.png" />).targetOffset(<span class="dig">280</span>,<span class="dig">275</span>)
+reps = []
+reps.append((rep_first_rep, rep_disc_daily))
+reps.append((rep_omega, rep_omega_daily))
+reps.append((rep_nukara, rep_nukara_daily))
+reps.append((rep_romulus, rep_romulus_daily))
+reps.append((rep_dyson, rep_dyson_daily))
+reps.append((rep_8472, rep_8472_daily))
+reps.append((rep_delta, rep_delta_daily))
+reps.append((rep_iconian, rep_iconian_daily))
+reps.append((rep_terran, rep_terran_daily))
+reps.append((rep_temporal, rep_temporal_daily))
+reps.append((rep_lukari, rep_lukari_daily))
+reps.append((rep_comp, rep_comp_daily))
+reps.append((rep_gamma, rep_gamma_daily))
+disconnectImg = Pattern(<img src="disconnectImg.png" />).similar(<span class="dig">0.95</span>).targetOffset(<span class="dig">106</span>,-<span class="dig">5</span>)
+passwordImg = Pattern(<img src="passwordImg.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">218</span>,<span class="dig">26</span>)
+loginImg = Pattern(<img src="loginImg.png" />).similar(<span class="dig">0.72</span>).targetOffset(<span class="dig">223</span>,<span class="dig">26</span>)
+loginBtn = <img src="loginBtn.png" />
+playImg = <img src="playImg.png" />
+noSlotsImg = Pattern(<img src="noSlotsImg.png" />).similar(<span class="dig">0.96</span>)
+scrollImg = Pattern(<img src="scrollImg.png" />).similar(<span class="dig">0.93</span>).targetOffset(<span class="dig">0</span>,-<span class="dig">7</span>)
+scrollUpImg = Pattern(<img src="scrollUpImg.png" />).similar(<span class="dig">0.92</span>).targetOffset(<span class="dig">1</span>,-<span class="dig">12</span>)
+doffBtn = Pattern(<img src="doffBtn.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">171</span>,<span class="dig">1</span>)
+departmentImg = Pattern(<img src="departmentImg.png" />).similar(<span class="dig">0.90</span>)
+completedImg = Pattern(<img src="completedImg.png" />).similar(<span class="dig">0.90</span>)
+collectImg = Pattern(<img src="collectImg.png" />).similar(<span class="dig">0.86</span>)
+ScienceImg = Pattern(<img src="ScienceImg.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">134</span>,<span class="dig">2</span>)
+TacticalImg = Pattern(<img src="TacticalImg.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">140</span>,-<span class="dig">1</span>)
+MedicalImg = Pattern(<img src="MedicalImg.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">139</span>,<span class="dig">1</span>)
+EngineeringImg = Pattern(<img src="EngineeringImg.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">124</span>,<span class="dig">0</span>)
+OperationsImg = Pattern(<img src="OperationsImg.png" />).similar(<span class="dig">0.91</span>).targetOffset(<span class="dig">127</span>,<span class="dig">2</span>)
+SecurityImg = Pattern(<img src="SecurityImg.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">134</span>,<span class="dig">1</span>)
+FirstOffImg = Pattern(<img src="FirstOffImg.png" />).similar(<span class="dig">0.90</span>).targetOffset(<span class="dig">220</span>,-<span class="dig">2</span>)
+PersonalImg = Pattern(<img src="PersonalImg.png" />).similar(<span class="dig">0.90</span>)
+FiltersImg = Pattern(<img src="FiltersImg.png" />).similar(<span class="dig">0.89</span>)
+FiltersListImg = Pattern(<img src="FiltersListImg.png" />).similar(<span class="dig">0.88</span>).targetOffset(-<span class="dig">97</span>,<span class="dig">10</span>)
+HoverOn = Pattern(<img src="HoverOn.png" />).similar(<span class="dig">0.90</span>)
+pressImg = Pattern(<img src="pressImg.png" />).similar(<span class="dig">0.90</span>)
+beginImg = Pattern(<img src="beginImg.png" />).similar(<span class="dig">0.90</span>)
+completedPageImg = <img src="completedPageImg.png" />
+unavailableImg = []
+unavailableImg.append(Pattern(<img src="1591176370603.png" />).similar(<span class="dig">0.93</span>))
+unavailableImg.append(Pattern(<img src="1591176419179.png" />).similar(<span class="dig">0.94</span>))
+unavailableImg.append(Pattern(<img src="1591183849017.png" />).similar(<span class="dig">0.85</span>))
+logoutImg = Pattern(<img src="logoutImg.png" />).similar(<span class="dig">0.91</span>)
+logout2Img = Pattern(<img src="logout2Img.png" />).similar(<span class="dig">0.90</span>).targetOffset(-<span class="dig">34</span>,<span class="dig">20</span>)
+
+whitelist = []
+ERROR = []
+<span class="cmt">#Science
+</span>whitelist.append((Pattern(<img src="1591290657013.png" />).targetOffset(<span class="dig">331</span>,<span class="dig">31</span>),<span class="dig">1</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591457990795.png" />).targetOffset(<span class="dig">222</span>,<span class="dig">33</span>),<span class="dig">20</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290680873.png" />).targetOffset(<span class="dig">239</span>,<span class="dig">35</span>),<span class="dig">20</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290778988.png" />).targetOffset(<span class="dig">274</span>,<span class="dig">28</span>),<span class="dig">8</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290793278.png" />).targetOffset(<span class="dig">257</span>,<span class="dig">30</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591324622339.png" />).targetOffset(<span class="dig">346</span>,<span class="dig">28</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+<span class="cmt">#whitelist.append((Pattern("1591290809143.png").targetOffset(298,28),20,"science")) #-MAT
+</span>whitelist.append((Pattern(<img src="1591324666165.png" />).targetOffset(<span class="dig">297</span>,<span class="dig">29</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458023331.png" />).targetOffset(<span class="dig">207</span>,<span class="dig">28</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290823297.png" />).targetOffset(<span class="dig">345</span>,<span class="dig">33</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290841609.png" />).targetOffset(<span class="dig">288</span>,<span class="dig">28</span>),<span class="dig">2</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290853884.png" />).targetOffset(<span class="dig">359</span>,<span class="dig">30</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458104564.png" />).targetOffset(<span class="dig">327</span>,<span class="dig">29</span>),<span class="dig">72</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290867026.png" />).targetOffset(<span class="dig">311</span>,<span class="dig">33</span>),<span class="dig">2</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290880165.png" />).targetOffset(<span class="dig">255</span>,<span class="dig">27</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290892645.png" />).targetOffset(<span class="dig">304</span>,<span class="dig">31</span>),<span class="dig">1</span>,<span class="str">"science"</span>))
+<span class="cmt">#whitelist.append((Pattern("1591290912874.png").targetOffset(315,30),8,"science"))
+</span>whitelist.append((Pattern(<img src="1591324712122.png" />).targetOffset(<span class="dig">374</span>,<span class="dig">35</span>),<span class="dig">8</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290935753.png" />).targetOffset(<span class="dig">379</span>,<span class="dig">30</span>),<span class="dig">1</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290946196.png" />).targetOffset(<span class="dig">283</span>,<span class="dig">30</span>),<span class="dig">8</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290964417.png" />).targetOffset(<span class="dig">332</span>,<span class="dig">31</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290973548.png" />).targetOffset(<span class="dig">299</span>,<span class="dig">29</span>),<span class="dig">2</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591290983409.png" />).targetOffset(<span class="dig">293</span>,<span class="dig">26</span>),<span class="dig">8</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591547363786.png" />).targetOffset(<span class="dig">254</span>,<span class="dig">33</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+<span class="cmt">#Exploration
+</span>whitelist.append((Pattern(<img src="1591290998355.png" />).targetOffset(<span class="dig">240</span>,<span class="dig">31</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291012065.png" />).targetOffset(<span class="dig">283</span>,<span class="dig">26</span>),<span class="dig">20</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458311306.png" />).targetOffset(<span class="dig">263</span>,<span class="dig">26</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591353313543.png" />).targetOffset(<span class="dig">319</span>,<span class="dig">30</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291023361.png" />).targetOffset(<span class="dig">383</span>,<span class="dig">27</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458361826.png" />).targetOffset(<span class="dig">259</span>,<span class="dig">30</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291034757.png" />).targetOffset(<span class="dig">371</span>,<span class="dig">33</span>),<span class="dig">1</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291044033.png" />).targetOffset(<span class="dig">385</span>,<span class="dig">34</span>),<span class="dig">3</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458394988.png" />).targetOffset(<span class="dig">230</span>,<span class="dig">27</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458436636.png" />).targetOffset(<span class="dig">225</span>,<span class="dig">33</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591324747163.png" />).targetOffset(<span class="dig">262</span>,<span class="dig">33</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458467513.png" />).targetOffset(<span class="dig">252</span>,<span class="dig">31</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458503793.png" />).targetOffset(<span class="dig">222</span>,<span class="dig">27</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591547439181.png" />).targetOffset(<span class="dig">215</span>,<span class="dig">29</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291061865.png" />).targetOffset(<span class="dig">252</span>,<span class="dig">30</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591891763168.png" />).targetOffset(<span class="dig">365</span>,<span class="dig">29</span>),<span class="dig">3</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591547485731.png" />).targetOffset(<span class="dig">354</span>,<span class="dig">31</span>),<span class="dig">8</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291104481.png" />).targetOffset(<span class="dig">272</span>,<span class="dig">27</span>),<span class="dig">2</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591458573573.png" />).targetOffset(<span class="dig">231</span>,<span class="dig">33</span>),<span class="dig">20</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591547538405.png" />).targetOffset(<span class="dig">304</span>,<span class="dig">31</span>),<span class="dig">8</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291119885.png" />).targetOffset(<span class="dig">279</span>,<span class="dig">29</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591324787827.png" />).targetOffset(<span class="dig">285</span>,<span class="dig">29</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291145545.png" />).targetOffset(<span class="dig">343</span>,<span class="dig">34</span>),<span class="dig">8</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291157609.png" />).targetOffset(<span class="dig">300</span>,<span class="dig">32</span>),<span class="dig">8</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291168085.png" />).targetOffset(<span class="dig">222</span>,<span class="dig">32</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291180418.png" />).targetOffset(<span class="dig">262</span>,<span class="dig">26</span>),<span class="dig">4</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291193176.png" />).targetOffset(<span class="dig">286</span>,<span class="dig">30</span>),<span class="dig">3</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291205826.png" />).targetOffset(<span class="dig">240</span>,<span class="dig">30</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591291217340.png" />).targetOffset(<span class="dig">221</span>,<span class="dig">27</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+<span class="cmt">#Medical
+</span>whitelist.append((Pattern(<img src="1591291238327.png" />).targetOffset(<span class="dig">326</span>,<span class="dig">31</span>),<span class="dig">0</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591324567162.png" />).targetOffset(<span class="dig">320</span>,<span class="dig">32</span>),<span class="dig">1</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291249850.png" />).targetOffset(<span class="dig">303</span>,<span class="dig">26</span>),<span class="dig">2</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291260827.png" />).targetOffset(<span class="dig">237</span>,<span class="dig">31</span>),<span class="dig">4</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291271177.png" />).targetOffset(<span class="dig">275</span>,<span class="dig">29</span>),<span class="dig">3</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291281154.png" />).targetOffset(<span class="dig">286</span>,<span class="dig">29</span>),<span class="dig">3</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291290425.png" />).targetOffset(<span class="dig">263</span>,<span class="dig">30</span>),<span class="dig">3</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291302190.png" />).targetOffset(<span class="dig">293</span>,<span class="dig">34</span>),<span class="dig">3</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291311861.png" />).targetOffset(<span class="dig">274</span>,<span class="dig">33</span>),<span class="dig">3</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291332899.png" />).targetOffset(<span class="dig">350</span>,<span class="dig">30</span>),<span class="dig">0</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291344345.png" />).targetOffset(<span class="dig">368</span>,<span class="dig">30</span>),<span class="dig">1</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291358697.png" />).targetOffset(<span class="dig">336</span>,<span class="dig">33</span>),<span class="dig">0</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591458626739.png" />).targetOffset(<span class="dig">316</span>,<span class="dig">32</span>),<span class="dig">2</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291371097.png" />).targetOffset(<span class="dig">301</span>,<span class="dig">33</span>),<span class="dig">20</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291383869.png" />).targetOffset(<span class="dig">329</span>,<span class="dig">28</span>),<span class="dig">20</span>, <span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291393277.png" />).targetOffset(<span class="dig">347</span>,<span class="dig">29</span>),<span class="dig">20</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591458664154.png" />).targetOffset(<span class="dig">308</span>,<span class="dig">36</span>),<span class="dig">6</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291403366.png" />).targetOffset(<span class="dig">291</span>,<span class="dig">32</span>),<span class="dig">20</span>, <span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291412696.png" />).targetOffset(<span class="dig">290</span>,<span class="dig">24</span>),<span class="dig">20</span>, <span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591324521605.png" />).targetOffset(<span class="dig">283</span>,<span class="dig">31</span>),<span class="dig">20</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291422102.png" />).targetOffset(<span class="dig">306</span>,<span class="dig">25</span>),<span class="dig">20</span>, <span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291432494.png" />).targetOffset(<span class="dig">285</span>,<span class="dig">28</span>),<span class="dig">20</span>, <span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1592061079513.png" />).targetOffset(<span class="dig">378</span>,<span class="dig">31</span>),<span class="dig">4</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591324469922.png" />).targetOffset(<span class="dig">355</span>,<span class="dig">30</span>),<span class="dig">20</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591458722475.png" />).targetOffset(<span class="dig">418</span>,<span class="dig">35</span>),<span class="dig">4</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591883826892.png" />).targetOffset(<span class="dig">317</span>,<span class="dig">31</span>),<span class="dig">6</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591673567282.png" />).targetOffset(<span class="dig">363</span>,<span class="dig">34</span>),<span class="dig">2</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591458750995.png" />).targetOffset(<span class="dig">407</span>,<span class="dig">34</span>),<span class="dig">1</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291443645.png" />).targetOffset(<span class="dig">375</span>,<span class="dig">31</span>),<span class="dig">0</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291456825.png" />).targetOffset(<span class="dig">393</span>,<span class="dig">32</span>),<span class="dig">1</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291470748.png" />).targetOffset(<span class="dig">379</span>,<span class="dig">29</span>),<span class="dig">1</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591324412658.png" />).targetOffset(<span class="dig">398</span>,<span class="dig">29</span>),<span class="dig">1</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291480499.png" />).targetOffset(<span class="dig">391</span>,<span class="dig">29</span>),<span class="dig">0</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291491578.png" />).targetOffset(<span class="dig">414</span>,<span class="dig">30</span>),<span class="dig">0</span>,<span class="str">"medical"</span>))
+whitelist.append((Pattern(<img src="1591291504842.png" />).targetOffset(<span class="dig">379</span>,<span class="dig">30</span>),<span class="dig">0</span>,<span class="str">"medical"</span>))
+<span class="cmt">#Military
+</span>whitelist.append((Pattern(<img src="1591291531571.png" />).targetOffset(<span class="dig">278</span>,<span class="dig">31</span>),<span class="dig">20</span>, <span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591291542626.png" />).targetOffset(<span class="dig">341</span>,<span class="dig">29</span>),<span class="dig">4</span>, <span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591291555198.png" />).targetOffset(<span class="dig">372</span>,<span class="dig">28</span>),<span class="dig">4</span>, <span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591291566968.png" />).targetOffset(<span class="dig">293</span>,<span class="dig">32</span>),<span class="dig">6</span>, <span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591458825506.png" />).targetOffset(<span class="dig">262</span>,<span class="dig">28</span>),<span class="dig">6</span>,<span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591458851850.png" />).targetOffset(<span class="dig">269</span>,<span class="dig">31</span>),<span class="dig">6</span>,<span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591458881250.png" />).targetOffset(<span class="dig">325</span>,<span class="dig">33</span>),<span class="dig">20</span>,<span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591458910635.png" />).targetOffset(<span class="dig">336</span>,<span class="dig">26</span>),<span class="dig">6</span>,<span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591291596496.png" />).targetOffset(<span class="dig">375</span>,<span class="dig">30</span>),<span class="dig">4</span>, <span class="str">"tactical"</span>))
+<span class="cmt">#Espionage
+</span>whitelist.append((Pattern(<img src="1591291607465.png" />).targetOffset(<span class="dig">429</span>,<span class="dig">31</span>),<span class="dig">20</span>, <span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591291623873.png" />).targetOffset(<span class="dig">370</span>,<span class="dig">31</span>),<span class="dig">8</span>, <span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591324833530.png" />).targetOffset(<span class="dig">388</span>,<span class="dig">25</span>),<span class="dig">20</span>,<span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591291639409.png" />).targetOffset(<span class="dig">434</span>,<span class="dig">34</span>),<span class="dig">1</span>, <span class="str">"tactical"</span>)) <span class="cmt">#48 hours, but gives doffs</span>
+whitelist.append((Pattern(<img src="1591458962986.png" />).targetOffset(<span class="dig">407</span>,<span class="dig">30</span>),<span class="dig">20</span>,<span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591291653073.png" />).targetOffset(<span class="dig">315</span>,<span class="dig">34</span>),<span class="dig">8</span>, <span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591459012837.png" />).targetOffset(<span class="dig">366</span>,<span class="dig">33</span>),<span class="dig">1</span>,<span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591459055961.png" />).targetOffset(<span class="dig">380</span>,<span class="dig">28</span>),<span class="dig">20</span>,<span class="str">"tactical"</span>))
+whitelist.append((Pattern(<img src="1591324870666.png" />).targetOffset(<span class="dig">395</span>,<span class="dig">34</span>),<span class="dig">20</span>,<span class="str">"tactical"</span>))
+
+<span class="cmt">#Engineering
+</span>whitelist.append((Pattern(<img src="1591291666811.png" />).targetOffset(<span class="dig">307</span>,<span class="dig">25</span>),<span class="dig">6</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291678313.png" />).targetOffset(<span class="dig">304</span>,<span class="dig">28</span>),<span class="dig">8</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591459757525.png" />).targetOffset(<span class="dig">390</span>,<span class="dig">29</span>),<span class="dig">2</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291688106.png" />).targetOffset(<span class="dig">339</span>,<span class="dig">28</span>),<span class="dig">6</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591369326170.png" />).targetOffset(<span class="dig">286</span>,<span class="dig">31</span>),<span class="dig">1</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291699393.png" />).targetOffset(<span class="dig">417</span>,<span class="dig">28</span>),<span class="dig">4</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591514859193.png" />).targetOffset(<span class="dig">333</span>,<span class="dig">29</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591678146412.png" />).targetOffset(<span class="dig">362</span>,<span class="dig">26</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591971465687.png" />).targetOffset(<span class="dig">384</span>,<span class="dig">29</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291710128.png" />).targetOffset(<span class="dig">348</span>,<span class="dig">29</span>),<span class="dig">8</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291722054.png" />).targetOffset(<span class="dig">371</span>,<span class="dig">29</span>),<span class="dig">8</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591514907063.png" />).targetOffset(<span class="dig">351</span>,<span class="dig">29</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291741043.png" />).targetOffset(<span class="dig">343</span>,<span class="dig">32</span>),<span class="dig">8</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1592129921844.png" />).similar(<span class="dig">0.78</span>).targetOffset(<span class="dig">345</span>,<span class="dig">40</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591514952297.png" />).targetOffset(<span class="dig">344</span>,<span class="dig">34</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591609931924.png" />).targetOffset(<span class="dig">385</span>,<span class="dig">35</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291751258.png" />).targetOffset(<span class="dig">345</span>,<span class="dig">28</span>),<span class="dig">8</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291761412.png" />).targetOffset(<span class="dig">357</span>,<span class="dig">32</span>),<span class="dig">8</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291782442.png" />).targetOffset(<span class="dig">367</span>,<span class="dig">29</span>),<span class="dig">8</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591291795865.png" />).targetOffset(<span class="dig">363</span>,<span class="dig">28</span>),<span class="dig">8</span>, <span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591459797193.png" />).targetOffset(<span class="dig">341</span>,<span class="dig">33</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591325023323.png" />).targetOffset(<span class="dig">305</span>,<span class="dig">29</span>),<span class="dig">8</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591459853610.png" />).targetOffset(<span class="dig">313</span>,<span class="dig">31</span>),<span class="dig">1</span>,<span class="str">"engineering"</span>))
+ERROR.append((<img src="1591459829210.png" />,<span class="dig">6</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591547791890.png" />).targetOffset(<span class="dig">315</span>,<span class="dig">26</span>),<span class="dig">0</span>,<span class="str">"engineering"</span>))
+ERROR.append((<img src="1591459883490.png" />,<span class="dig">20</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591459920571.png" />).targetOffset(<span class="dig">313</span>,<span class="dig">31</span>),<span class="dig">20</span>,<span class="str">"engineering"</span>))
+<span class="cmt">#Colonial
+</span>whitelist.append((Pattern(<img src="1591459098393.png" />).targetOffset(<span class="dig">207</span>,<span class="dig">32</span>),<span class="dig">20</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591459168241.png" />).targetOffset(<span class="dig">433</span>,<span class="dig">32</span>),<span class="dig">4</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591324923234.png" />).targetOffset(<span class="dig">292</span>,<span class="dig">29</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591324963213.png" />).targetOffset(<span class="dig">297</span>,<span class="dig">31</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591891921330.png" />).targetOffset(<span class="dig">275</span>,<span class="dig">32</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591291808492.png" />).targetOffset(<span class="dig">287</span>,<span class="dig">30</span>),<span class="dig">0</span>, <span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591459206041.png" />).targetOffset(<span class="dig">256</span>,<span class="dig">27</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591610092009.png" />).targetOffset(<span class="dig">279</span>,<span class="dig">32</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591459234292.png" />).targetOffset(<span class="dig">284</span>,<span class="dig">30</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591459269410.png" />).targetOffset(<span class="dig">273</span>,<span class="dig">26</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591883911646.png" />).targetOffset(<span class="dig">285</span>,<span class="dig">28</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591522583365.png" />).targetOffset(<span class="dig">301</span>,<span class="dig">28</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591464761838.png" />).targetOffset(<span class="dig">295</span>,<span class="dig">29</span>),<span class="dig">0</span>,<span class="str">"operations"</span>))
+
+<span class="cmt">#Development
+</span>whitelist.append((Pattern(<img src="1591547632899.png" />).targetOffset(<span class="dig">255</span>,<span class="dig">31</span>),<span class="dig">72</span>,<span class="str">"engineering"</span>))
+whitelist.append((Pattern(<img src="1591464796409.png" />).targetOffset(<span class="dig">320</span>,<span class="dig">30</span>),<span class="dig">4</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591522634827.png" />).targetOffset(<span class="dig">364</span>,<span class="dig">28</span>),<span class="dig">8</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591498703651.png" />).targetOffset(<span class="dig">485</span>,<span class="dig">34</span>),<span class="dig">4</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591498749352.png" />).targetOffset(<span class="dig">432</span>,<span class="dig">31</span>),<span class="dig">4</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591514806151.png" />).targetOffset(<span class="dig">335</span>,<span class="dig">31</span>),<span class="dig">8</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591522672052.png" />).targetOffset(<span class="dig">319</span>,<span class="dig">33</span>),<span class="dig">8</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591610152596.png" />).targetOffset(<span class="dig">359</span>,<span class="dig">26</span>),<span class="dig">8</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591464847658.png" />).targetOffset(<span class="dig">401</span>,<span class="dig">29</span>),<span class="dig">6</span>,<span class="str">"operations"</span>))
+whitelist.append((Pattern(<img src="1591464879583.png" />).targetOffset(<span class="dig">358</span>,<span class="dig">33</span>),<span class="dig">20</span>,<span class="str">"operations"</span>))
+
+<span class="cmt">#Diplomacy
+</span>whitelist.append((Pattern(<img src="1591622572609.png" />).targetOffset(<span class="dig">394</span>,<span class="dig">32</span>),<span class="dig">6</span>,<span class="str">"first"</span>))
+<span class="cmt">#Personal
+</span>whitelist.append((Pattern(<img src="1591522714051.png" />).targetOffset(<span class="dig">309</span>,<span class="dig">27</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591498810252.png" />).targetOffset(<span class="dig">351</span>,<span class="dig">34</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592016448953.png" />).targetOffset(<span class="dig">370</span>,<span class="dig">31</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591883696836.png" />).targetOffset(<span class="dig">273</span>,<span class="dig">29</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591498919703.png" />).targetOffset(<span class="dig">373</span>,<span class="dig">31</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1593157337888.png" />).targetOffset(<span class="dig">378</span>,<span class="dig">27</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592451509898.png" />).targetOffset(<span class="dig">310</span>,<span class="dig">32</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591503016077.png" />).targetOffset(<span class="dig">285</span>,<span class="dig">36</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592144017339.png" />).targetOffset(<span class="dig">337</span>,<span class="dig">31</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591691823258.png" />).targetOffset(<span class="dig">363</span>,<span class="dig">30</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591503361290.png" />).targetOffset(<span class="dig">385</span>,<span class="dig">31</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591503278420.png" />).targetOffset(<span class="dig">367</span>,<span class="dig">31</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591515088350.png" />).targetOffset(<span class="dig">366</span>,<span class="dig">34</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591626691078.png" />).targetOffset(<span class="dig">381</span>,<span class="dig">31</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591547115580.png" />).targetOffset(<span class="dig">355</span>,<span class="dig">30</span>),<span class="dig">8</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592488850517.png" />).targetOffset(<span class="dig">285</span>,<span class="dig">32</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591464984903.png" />).targetOffset(<span class="dig">364</span>,<span class="dig">30</span>),<span class="dig">0</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591610026549.png" />).targetOffset(<span class="dig">273</span>,<span class="dig">31</span>),<span class="dig">0</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591890157895.png" />).targetOffset(<span class="dig">441</span>,<span class="dig">28</span>),<span class="dig">8</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591678034119.png" />).targetOffset(<span class="dig">429</span>,<span class="dig">32</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591515120886.png" />).targetOffset(<span class="dig">398</span>,<span class="dig">32</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591691915077.png" />).targetOffset(<span class="dig">369</span>,<span class="dig">28</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591503138356.png" />).targetOffset(<span class="dig">329</span>,<span class="dig">30</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592016547855.png" />).targetOffset(<span class="dig">329</span>,<span class="dig">31</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591522756091.png" />).targetOffset(<span class="dig">338</span>,<span class="dig">30</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591890118926.png" />).targetOffset(<span class="dig">394</span>,<span class="dig">34</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591522844277.png" />).targetOffset(<span class="dig">357</span>,<span class="dig">32</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591622752665.png" />).targetOffset(<span class="dig">362</span>,<span class="dig">30</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591522783789.png" />).targetOffset(<span class="dig">330</span>,<span class="dig">25</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591626647541.png" />).targetOffset(<span class="dig">344</span>,<span class="dig">32</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591547162947.png" />).targetOffset(<span class="dig">363</span>,<span class="dig">33</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591890079750.png" />).targetOffset(<span class="dig">361</span>,<span class="dig">33</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592451462643.png" />).targetOffset(<span class="dig">371</span>,<span class="dig">31</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592061161977.png" />).targetOffset(<span class="dig">333</span>,<span class="dig">26</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591514993015.png" />).targetOffset(<span class="dig">387</span>,<span class="dig">33</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591696101174.png" />).targetOffset(<span class="dig">383</span>,<span class="dig">32</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591503314483.png" />).targetOffset(<span class="dig">297</span>,<span class="dig">25</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591883581963.png" />).targetOffset(<span class="dig">334</span>,<span class="dig">26</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591547026410.png" />).targetOffset(<span class="dig">288</span>,<span class="dig">27</span>),<span class="dig">1</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591626730947.png" />).targetOffset(<span class="dig">360</span>,<span class="dig">28</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591678073099.png" />).targetOffset(<span class="dig">372</span>,<span class="dig">30</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591696149141.png" />).targetOffset(<span class="dig">299</span>,<span class="dig">29</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591547266307.png" />).targetOffset(<span class="dig">287</span>,<span class="dig">32</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1593153010425.png" />).targetOffset(<span class="dig">377</span>,<span class="dig">33</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591691867106.png" />).targetOffset(<span class="dig">366</span>,<span class="dig">31</span>),<span class="dig">8</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591609977805.png" />).targetOffset(<span class="dig">329</span>,<span class="dig">31</span>),<span class="dig">2</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591515046895.png" />).targetOffset(<span class="dig">362</span>,<span class="dig">31</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591503182650.png" />).targetOffset(<span class="dig">421</span>,<span class="dig">37</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591464919801.png" />).targetOffset(<span class="dig">311</span>,<span class="dig">26</span>),<span class="dig">4</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591498885739.png" />).targetOffset(<span class="dig">424</span>,<span class="dig">32</span>),<span class="dig">0</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591883746820.png" />).targetOffset(<span class="dig">390</span>,<span class="dig">28</span>),<span class="dig">0</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591547073675.png" />).targetOffset(<span class="dig">383</span>,<span class="dig">29</span>),<span class="dig">0</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592016488599.png" />).targetOffset(<span class="dig">285</span>,<span class="dig">31</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591503241722.png" />).targetOffset(<span class="dig">384</span>,<span class="dig">31</span>),<span class="dig">8</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1592896149799.png" />).targetOffset(<span class="dig">361</span>,<span class="dig">29</span>),<span class="dig">6</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1591971380279.png" />).targetOffset(<span class="dig">296</span>,<span class="dig">28</span>),<span class="dig">6</span>,<span class="str">"science"</span>))
+whitelist.append((Pattern(<img src="1591522816927.png" />).targetOffset(<span class="dig">377</span>,<span class="dig">29</span>),<span class="dig">8</span>,<span class="str">"personal"</span>))
+whitelist.append((Pattern(<img src="1595137576406.png" />).targetOffset(<span class="dig">419</span>,<span class="dig">31</span>),<span class="dig">1</span>,<span class="str">"personal"</span>))
+
+tod_running = [[False,adm_fed,<span class="dig">0</span>], [False,adm_kdf,<span class="dig">1</span>], [False,adm_rom,<span class="dig">2</span>], [False,adm_fer,<span class="dig">3</span>]]
+adm_slot = False
+adm_started = <span class="dig">1</span>
+adm_slot_img = <img src="adm_slot_img.png" />
+exitImg = <img src="exitImg.png" />
+exitOk = Pattern(<img src="exitOk.png" />).targetOffset(-<span class="dig">42</span>,<span class="dig">12</span>)
+playImgArc = <img src="playImgArc.png" />
+engageImg = <img src="engageImg.png" />
+maintenance = <img src="maintenance.png" />
+closeSto = Pattern(<img src="closeSto.png" />).targetOffset(<span class="dig">715</span>,-<span class="dig">2</span>)
+<span class="kw">def</span> PatchGame():
+    SafeClick(exitImg)
+    <span class="skw">wait</span>(<span class="dig">2</span>)
+    SafeClick(exitOk)
+    <span class="skw">wait</span>(<span class="dig">10</span>)
+    switchApp(<span class="str">"C:\\Program Files (x86)\\Arc\\Arc.exe"</span>)
+    <span class="skw">wait</span>(<span class="dig">10</span>)
+    SafeClick(playImgArc)
+    <span class="skw">wait</span>(<span class="dig">120</span>)
+    <span class="kw">if</span> exists(maintenance):
+        SafeClick(closeSto)
+        <span class="skw">wait</span>(<span class="dig">60</span>*<span class="dig">30</span>)
+        PatchGame()
+    SafeClick(engageImg)
+    <span class="skw">wait</span>(<span class="dig">60</span>*<span class="dig">5</span>)
+<span class="kw">def</span> CheckTOD():
+    <span class="kw">if</span> exists(TOD_fed):
+        tod_running[<span class="dig">0</span>][<span class="dig">0</span>] = True
+    <span class="kw">if</span> exists(TOD_kdf):
+        tod_running[<span class="dig">1</span>][<span class="dig">0</span>] = True
+    <span class="kw">if</span> exists(TOD_rom):
+        tod_running[<span class="dig">2</span>][<span class="dig">0</span>] = True
+    <span class="kw">if</span> exists(TOD_fer):
+        tod_running[<span class="dig">3</span>][<span class="dig">0</span>] = True
+<span class="kw">def</span> CheckCompletedAdm(recursion = False):
+    <span class="kw">global</span> adm_slot
+    <span class="kw">if</span> <span class="kw">not</span> recursion:
+        adm_slot = False
+    SafeClick(adm_button)
+    <span class="kw">while</span> exists(adm_complete1):
+        <span class="kw">if</span> exists(adm_complete1):
+            <span class="skw">click</span>(adm_complete1)
+            adm_slot = True
+            <span class="skw">wait</span>(<span class="dig">7</span>)
+    <span class="kw">while</span> exists(adm_complete2):
+        <span class="kw">if</span> exists(adm_complete2):
+            <span class="skw">click</span>(adm_complete2)
+            adm_slot = True
+            <span class="skw">wait</span>(<span class="dig">7</span>)
+    <span class="kw">if</span> exists(adm_slot_img):
+        adm_slot = True
+    CheckTOD()
+    <span class="kw">if</span> exists(scrollImg):
+        MouseHold(scrollImg)
+        CheckCompletedAdm(True)
+    <span class="kw">else</span>:
+        <span class="kw">if</span> exists(scrollUpImg):
+            MouseHold(scrollUpImg)
+<span class="kw">def</span> AdmGetAvailableShips(tod = False):
+    <span class="kw">global</span> adm_started
+    ids = []
+    SafeClick(adm_select1)
+    <span class="kw">if</span> tod:
+        ships = adm_ships
+    <span class="kw">else</span>:
+        ships = adm_fleet
+    <span class="kw">while</span> exists(scrollImg):
+     <span class="kw">for</span> i <span class="kw">in</span> range(len(ships)):
+         <span class="kw">if</span> i <span class="kw">in</span> ids:
+             <span class="kw">continue</span>
+         <span class="kw">if</span> ships[i][<span class="dig">4</span>] == <span class="dig">100</span> <span class="kw">and</span> adm_started % <span class="dig">10</span> != <span class="dig">0</span>:
+             <span class="kw">continue</span>
+         <span class="kw">if</span> exists(ships[i][<span class="dig">0</span>]):
+             ids.append(i)
+     <span class="kw">if</span> exists(scrollImg):
+         MouseHold(scrollImg)
+    SafeClick(adm_close_ships)
+    <span class="kw">if</span> CheckConnection() == <span class="dig">0</span>:
+                <span class="kw">return</span>
+    <span class="kw">return</span> ids
+<span class="kw">def</span> AdmGetBestThree(tod = False):
+    ids = AdmGetAvailableShips(tod)
+    max_ids = [-<span class="dig">1</span>,-<span class="dig">1</span>,-<span class="dig">1</span>]
+    <span class="kw">if</span> ids <span class="kw">is</span> None:
+        <span class="kw">return</span> max_ids
+    <span class="kw">if</span> tod:
+        ships = adm_ships
+    <span class="kw">else</span>:
+        ships = adm_fleet
+    <span class="kw">for</span> div <span class="kw">in</span> [<span class="dig">1</span>,<span class="dig">2</span>,<span class="dig">3</span>]:
+        max = <span class="dig">0</span>
+        <span class="kw">for</span> id <span class="kw">in</span> ids:
+            <span class="kw">if</span> ships[id][div] &gt; max:
+                max = ships[id][div]
+                max_ids[div-<span class="dig">1</span>] = id
+        <span class="kw">if</span> max_ids[div-<span class="dig">1</span>] <span class="kw">in</span> ids:
+            ids.remove(max_ids[div-<span class="dig">1</span>])
+    <span class="kw">return</span> max_ids
+<span class="kw">def</span> ScrollUp():
+    <span class="kw">while</span> True:
+        <span class="kw">if</span> exists(scrollUpImg):
+            MouseHold(scrollUpImg)
+        <span class="kw">else</span>:
+            <span class="kw">break</span>
+<span class="kw">def</span> CoarseAdm(faction):
+    <span class="kw">global</span> adm_slot
+    <span class="kw">global</span> adm_started
+    allTOD = tod_running[<span class="dig">0</span>][<span class="dig">0</span>] <span class="kw">and</span> tod_running[<span class="dig">1</span>][<span class="dig">0</span>] <span class="kw">and</span> tod_running[<span class="dig">2</span>][<span class="dig">0</span>] <span class="kw">and</span> tod_running[<span class="dig">3</span>][<span class="dig">0</span>]
+    counter = <span class="dig">0</span>
+    <span class="kw">for</span> item <span class="kw">in</span> adm_coarse:
+        counter += <span class="dig">1</span>
+        <span class="kw">if</span> counter == <span class="dig">4</span>:
+            <span class="kw">if</span> CheckConnection() == <span class="dig">0</span>:
+                <span class="kw">return</span>
+        <span class="kw">if</span> exists(TOD):
+            <span class="kw">return</span>
+        <span class="kw">if</span> exists(item):
+            <span class="skw">click</span>(item)
+            <span class="skw">wait</span>(<span class="dig">2</span>)
+            <span class="kw">if</span> <span class="kw">not</span> exists(adm_select1):
+                adm_slot = False
+                CheckCompletedAdm()
+                <span class="kw">if</span> adm_slot:
+                    SafeClick(faction)
+                    <span class="kw">if</span> exists(TOD):
+                        <span class="kw">return</span>
+                    <span class="skw">wait</span>(<span class="dig">2</span>)
+                    CoarseAdm(faction)
+                <span class="kw">else</span>:
+                    <span class="kw">return</span> <span class="dig">0</span>
+            <span class="kw">if</span> exists(scrollUpImg):
+                MouseHold(scrollUpImg,<span class="dig">5</span>)
+            <span class="kw">if</span> CheckConnection() == <span class="dig">0</span>:
+                <span class="kw">return</span>
+            bestShips = AdmGetBestThree(False)
+            has_shuttle = False
+            <span class="kw">for</span> sel <span class="kw">in</span> [adm_select1, adm_select2, adm_select3]:
+                <span class="kw">if</span> bestShips[<span class="dig">0</span>] == bestShips[<span class="dig">1</span>] == bestShips[<span class="dig">2</span>] == -<span class="dig">1</span>:
+                    <span class="kw">break</span>
+                <span class="kw">if</span> exists(sel):
+                    <span class="skw">click</span>(sel)
+                    <span class="skw">wait</span>(<span class="dig">2</span>)
+                    ScrollUp()
+                    <span class="kw">while</span> exists(scrollImg):
+                        <span class="kw">for</span> ind, id <span class="kw">in</span> enumerate(bestShips):
+                            <span class="kw">if</span> id == -<span class="dig">1</span>:
+                                <span class="kw">continue</span>
+                            <span class="kw">if</span> exists(adm_fleet[id][<span class="dig">0</span>]):
+                                <span class="skw">doubleClick</span>(adm_fleet[id][<span class="dig">0</span>])
+                                <span class="skw">wait</span>(<span class="dig">1</span>)
+                                bestShips[ind] = -<span class="dig">1</span>
+                                has_shuttle = True
+                                <span class="skw">wait</span>(<span class="dig">5</span>)
+                                <span class="kw">if</span> exists(adm_okay_chance):
+                                    SafeClick(adm_begin)
+                                    adm_started += <span class="dig">1</span>
+                                    <span class="kw">return</span>
+                                <span class="kw">break</span>
+                        <span class="kw">if</span> exists(scrollImg):
+                            MouseHold(scrollImg)
+            <span class="skw">wait</span>(<span class="dig">3</span>)
+            <span class="kw">if</span> has_shuttle:
+                SafeClick(adm_begin)
+                <span class="kw">return</span>
+                adm_started += <span class="dig">1</span>
+            <span class="kw">if</span> <span class="kw">not</span> has_shuttle:
+                <span class="kw">if</span> allTOD:
+                    <span class="kw">return</span> <span class="dig">0</span>
+                SafeClick(adm_select1)
+                <span class="kw">for</span> ship <span class="kw">in</span> adm_ships:
+                    <span class="kw">if</span> ship[<span class="dig">4</span>] == <span class="dig">0</span> <span class="kw">and</span> exists(ship[<span class="dig">0</span>]):
+                        <span class="skw">click</span>(ship[<span class="dig">0</span>])
+                        has_shuttle = True
+                        <span class="skw">wait</span>(<span class="dig">1</span>)
+                        SafeClick(adm_assign)
+                        SafeClick(adm_begin)
+                        <span class="skw">wait</span>(<span class="dig">5</span>)
+                        <span class="kw">return</span>
+                        <span class="kw">break</span>
+            <span class="kw">if</span> <span class="kw">not</span> has_shuttle:
+                <span class="kw">return</span> <span class="dig">0</span>
+<span class="kw">def</span> RunTOD(faction_index):
+    <span class="kw">global</span> adm_slot
+    SafeClick(TOD)
+    <span class="kw">if</span> <span class="kw">not</span> exists(adm_select1):
+        adm_slot = False
+        CheckCompletedAdm()
+        <span class="kw">if</span> adm_slot:
+            SafeClick(faction_index[<span class="dig">1</span>])
+            SafeClick(TOD)
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="dig">0</span>
+    best_ids = AdmGetBestThree(True)
+    <span class="kw">if</span> best_ids[<span class="dig">0</span>] == best_ids[<span class="dig">1</span>] == best_ids[<span class="dig">2</span>] == -<span class="dig">1</span>:
+        <span class="kw">return</span> <span class="dig">0</span>
+    SafeClick(adm_select1)
+    <span class="skw">wait</span>(<span class="dig">3</span>)
+    ScrollUp()
+    <span class="kw">if</span> best_ids[<span class="dig">0</span>] != -<span class="dig">1</span>:
+        <span class="kw">while</span> exists(scrollImg):
+            <span class="kw">if</span> exists(adm_ships[best_ids[<span class="dig">0</span>]][<span class="dig">0</span>]):
+                <span class="skw">doubleClick</span>(adm_ships[best_ids[<span class="dig">0</span>]][<span class="dig">0</span>])
+                <span class="kw">break</span>
+            <span class="kw">else</span>:
+                <span class="kw">if</span> exists(scrollImg):
+                    MouseHold(scrollImg)
+    <span class="kw">else</span>:
+        found = False
+        <span class="kw">while</span> exists(scrollImg) <span class="kw">and</span> <span class="kw">not</span> found:
+            <span class="kw">for</span> ship1 <span class="kw">in</span> adm_ships:
+                <span class="kw">if</span> ship1[<span class="dig">4</span>] &gt; <span class="dig">0</span> <span class="kw">and</span> exists(ship1[<span class="dig">0</span>]):
+                    <span class="skw">doubleClick</span>(ship1[<span class="dig">0</span>])
+                    found = True
+                    <span class="kw">break</span>
+            <span class="kw">if</span> exists(scrollImg):
+                <span class="skw">click</span>(scrollImg)
+        <span class="kw">if</span> <span class="kw">not</span> found:
+            <span class="kw">return</span> <span class="dig">0</span>
+    <span class="skw">wait</span>(<span class="dig">5</span>)
+    <span class="kw">if</span> exists(adm_good_chance):
+        SafeClick(adm_begin)
+        tod_running[faction_index[<span class="dig">2</span>]][<span class="dig">0</span>] = True
+        <span class="kw">return</span>
+    SafeClick(adm_select2)
+    <span class="skw">wait</span>(<span class="dig">1</span>)
+    ScrollUp()
+    <span class="kw">if</span> best_ids[<span class="dig">1</span>] != -<span class="dig">1</span>:
+        <span class="kw">while</span> exists(scrollImg):
+            <span class="kw">if</span> exists(adm_ships[best_ids[<span class="dig">1</span>]][<span class="dig">0</span>]):
+                <span class="skw">doubleClick</span>(adm_ships[best_ids[<span class="dig">1</span>]][<span class="dig">0</span>])
+                <span class="kw">break</span>
+            <span class="kw">else</span>:
+                <span class="kw">if</span> exists(scrollImg):
+                    MouseHold(scrollImg)
+    <span class="skw">wait</span>(<span class="dig">5</span>)
+    <span class="kw">if</span> exists(adm_good_chance):
+        SafeClick(adm_begin)
+        tod_running[faction_index[<span class="dig">2</span>]][<span class="dig">0</span>] = True
+        <span class="kw">return</span>
+    SafeClick(adm_select3)
+    <span class="skw">wait</span>(<span class="dig">1</span>)
+    ScrollUp()
+    <span class="kw">if</span> best_ids[<span class="dig">2</span>] != -<span class="dig">1</span>:
+        <span class="kw">while</span> exists(scrollImg):
+            <span class="kw">if</span> exists(adm_ships[best_ids[<span class="dig">2</span>]][<span class="dig">0</span>]):
+                <span class="skw">doubleClick</span>(adm_ships[best_ids[<span class="dig">2</span>]][<span class="dig">0</span>])
+                <span class="kw">break</span>
+            <span class="kw">else</span>:
+                <span class="kw">if</span> exists(scrollImg):
+                    MouseHold(scrollImg)
+    <span class="skw">wait</span>(<span class="dig">5</span>)
+    <span class="kw">if</span> <span class="kw">not</span> exists(adm_okay_chance):
+        <span class="kw">return</span> <span class="dig">0</span>
+    <span class="kw">else</span>:
+        SafeClick(adm_begin)
+        tod_running[faction_index[<span class="dig">2</span>]][<span class="dig">0</span>] = True
+<span class="kw">def</span> CheckAdm():
+    <span class="kw">global</span> adm_slot
+    <span class="kw">if</span> exists(adm_button):
+        <span class="skw">click</span>(adm_button)
+    <span class="kw">else</span>:
+        <span class="kw">if</span> <span class="kw">not</span> exists (passwordImg):
+            <span class="skw">type</span>(<span class="str">'P'</span>)
+            SafeClick(adm_button)
+    hover(HoverOn)
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">0</span>,<span class="dig">3</span>):
+        tod_running[i][<span class="dig">0</span>] = False
+    adm_slot = False
+    CheckCompletedAdm()
+    <span class="kw">if</span> <span class="kw">not</span> adm_slot:
+        <span class="kw">return</span>
+    <span class="kw">for</span> faction_index <span class="kw">in</span> [<span class="dig">2</span>,<span class="dig">3</span>,<span class="dig">1</span>,<span class="dig">0</span>]:
+        <span class="kw">if</span> tod_running[faction_index][<span class="dig">0</span>]:
+            <span class="kw">continue</span>
+        SafeClick(tod_running[faction_index][<span class="dig">1</span>])
+        <span class="kw">if</span> exists(TOD):
+            res = RunTOD(tod_running[faction_index])
+            <span class="kw">if</span> res == <span class="dig">0</span>:
+                <span class="kw">return</span>
+            <span class="kw">if</span> adm_slot:
+                CheckAdm()
+            <span class="kw">else</span>:
+                <span class="kw">return</span>
+        <span class="kw">else</span>:
+            <span class="kw">while</span> True:
+                SafeClick(tod_running[faction_index][<span class="dig">1</span>])
+                res = CoarseAdm(tod_running[faction_index][<span class="dig">1</span>])
+                SafeClick(tod_running[faction_index][<span class="dig">1</span>])
+                <span class="kw">if</span> res == <span class="dig">0</span>:
+                    <span class="kw">return</span>
+                <span class="skw">wait</span>(<span class="dig">3</span>)
+                <span class="kw">if</span> exists(TOD):
+                    res2 = RunTOD(tod_running[faction_index])
+                    <span class="kw">if</span> res2 == <span class="dig">0</span>:
+                        <span class="kw">return</span>
+                    <span class="kw">if</span> adm_slot:
+                        CheckAdm()
+                    <span class="kw">else</span>:
+                        CheckCompletedAdm()
+                        <span class="kw">if</span> <span class="kw">not</span> adm_slot:
+                            <span class="kw">return</span>
+                <span class="kw">if</span> res == <span class="dig">0</span>:
+                    <span class="kw">break</span>
+    allTOD = tod_running[<span class="dig">0</span>][<span class="dig">0</span>] <span class="kw">and</span> tod_running[<span class="dig">1</span>][<span class="dig">0</span>] <span class="kw">and</span> tod_running[<span class="dig">2</span>][<span class="dig">0</span>] <span class="kw">and</span> tod_running[<span class="dig">3</span>][<span class="dig">0</span>]
+    <span class="kw">if</span> ADM_RUN_CONSTANTLY <span class="kw">and</span> allTOD:
+            <span class="kw">while</span> True:
+                SafeClick(tod_running[WHICH_ADM][<span class="dig">1</span>])
+                res = CoarseAdm(tod_running[WHICH_ADM][<span class="dig">1</span>])
+                SafeClick(tod_running[WHICH_ADM][<span class="dig">1</span>])
+                <span class="kw">if</span> res == <span class="dig">0</span>:
+                    <span class="kw">if</span> adm_slot:
+                        <span class="kw">return</span>
+                    CheckCompletedAdm()
+                <span class="kw">if</span> <span class="kw">not</span> adm_slot:
+                    <span class="kw">return</span>
+                SafeClick(tod_running[WHICH_ADM][<span class="dig">1</span>])
+                <span class="skw">wait</span>(<span class="dig">3</span>)
+<span class="kw">def</span> CheckRep():
+    <span class="kw">if</span> exists(rep_click_btn):
+        <span class="skw">click</span>(rep_click_btn)
+    <span class="kw">else</span>:
+        <span class="kw">if</span> CheckConnection() == <span class="dig">0</span>:
+                <span class="kw">return</span>
+        <span class="skw">type</span>(<span class="str">'U'</span>)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="kw">if</span> <span class="kw">not</span> exists(rep_click_btn):
+            <span class="skw">type</span>(<span class="str">'U'</span>)
+            <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="kw">if</span> <span class="kw">not</span> exists(rep_click_btn):
+            <span class="kw">return</span> <span class="dig">0</span>
+        <span class="kw">else</span>:
+            SafeClick(rep_click_btn)
+    <span class="kw">if</span> exists(rep_first_rep):
+        <span class="skw">click</span>(rep_first_rep)
+    <span class="kw">for</span> rep <span class="kw">in</span> reps:
+        <span class="kw">if</span> exists(rep[<span class="dig">0</span>]):
+            <span class="skw">click</span>(rep[<span class="dig">0</span>])
+            <span class="skw">wait</span>(<span class="dig">3</span>)
+        <span class="kw">if</span> exists(rep_collectImg):
+            <span class="skw">click</span>(rep_collectImg)
+            hover(HoverOn)
+            <span class="skw">wait</span>(<span class="dig">3</span>)
+        <span class="kw">if</span> exists(rep_selectImg):
+            <span class="skw">click</span>(rep_selectImg)
+            <span class="skw">wait</span>(<span class="dig">3</span>)
+        <span class="kw">if</span> exists(rep[<span class="dig">1</span>]):
+            <span class="skw">click</span>(rep[<span class="dig">1</span>])
+            <span class="skw">wait</span>(<span class="dig">3</span>)
+            <span class="kw">if</span> exists(rep_fill_all):
+                <span class="skw">click</span>(rep_fill_all)
+                <span class="skw">wait</span>(<span class="dig">3</span>)
+                <span class="kw">if</span> exists(rep_fill_yes):
+                    <span class="skw">click</span>(rep_fill_yes)
+                    <span class="skw">wait</span>(<span class="dig">7</span>)
+        <span class="kw">if</span> False: <span class="cmt">#exists(rep_upgrade):</span>
+            <span class="skw">click</span>(rep_upgrade)
+            <span class="skw">wait</span>(<span class="dig">2</span>)
+            <span class="kw">if</span> exists(rep_comp_convert):
+                <span class="skw">click</span>(rep_comp_convert)
+                <span class="skw">wait</span>(<span class="dig">1</span>)
+                <span class="kw">if</span> exists(rep_fill_all):
+                    <span class="skw">click</span>(rep_fill_all)
+                    <span class="skw">wait</span>(<span class="dig">3</span>)
+                    <span class="kw">if</span> exists(rep_fill_yes):
+                        <span class="skw">click</span>(rep_fill_yes)
+                        <span class="skw">wait</span>(<span class="dig">10</span>)
+                        SafeClick(rep_collectImg)
+        <span class="kw">if</span> CheckConnection() == <span class="dig">0</span>:
+                <span class="kw">return</span>
+    <span class="kw">if</span> exists(rep_click_btn):
+            <span class="skw">type</span>(<span class="str">'U'</span>)
+<span class="kw">def</span> AddRndTask(icon, task):
+    <span class="kw">if</span> exists(icon):
+            <span class="skw">click</span>(icon)
+    <span class="kw">while</span> exists(scrollImg):
+        <span class="kw">if</span> exists(scrollImg):
+            MouseHold(scrollImg, <span class="dig">5</span>)
+    <span class="kw">if</span> exists(task):
+        <span class="skw">click</span>(task)
+        <span class="kw">if</span> exists(rnd_startTask):
+            <span class="skw">click</span>(rnd_startTask)
+            <span class="skw">wait</span>(<span class="dig">2</span>)
+<span class="kw">def</span> CheckRnd():
+    <span class="kw">if</span> exists(rnd_button):
+        <span class="skw">click</span>(rnd_button)
+    <span class="kw">while</span> exists(rnd_completeImg):
+        <span class="kw">if</span> exists(rnd_completeImg):
+            <span class="skw">click</span>(rnd_completeImg)
+            <span class="skw">wait</span>(<span class="dig">3</span>)
+    <span class="kw">while</span> <span class="kw">not</span> exists(rnd_noslot):
+        <span class="kw">if</span> <span class="kw">not</span> exists(rnd_noslot):
+            ind = randrange(<span class="dig">7</span>)
+            AddRndTask(rnds[ind][<span class="dig">0</span>], rnds[ind][<span class="dig">1</span>])
+
+<span class="kw">def</span> CheckRndBeforeSlot():
+    <span class="kw">if</span> exists(rnd_button):
+        <span class="skw">click</span>(rnd_button)
+    <span class="kw">while</span> exists(rnd_completeImg):
+        <span class="kw">if</span> exists(rnd_completeImg):
+            <span class="skw">click</span>(rnd_completeImg)
+    <span class="kw">if</span> <span class="kw">not</span> exists(rnd_noslot):
+        <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">0</span>,<span class="dig">3</span>):
+            AddRndTask(rnd_canIcon, rnd_canStartImg)
+        <span class="kw">for</span> j <span class="kw">in</span> range(<span class="dig">0</span>,<span class="dig">2</span>):
+            AddRndTask(rnd_beaIcon, rnd_beaStartImg)
+
+departments = <span class="str">"science"</span>, <span class="str">"medical"</span>, <span class="str">"tactical"</span>, <span class="str">"operations"</span>, <span class="str">"first"</span>, <span class="str">"personal"</span>, <span class="str">"engineering"</span>, <span class="str">"security"</span>
+<span class="kw">def</span> SafeClick(img):
+    <span class="kw">if</span> exists(img):
+        <span class="skw">click</span>(img)
+<span class="kw">def</span> CheckConnection():
+    <span class="kw">if</span> exists(imgTaskbar):
+        <span class="skw">click</span>(imgTaskbar)
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+    <span class="kw">if</span> exists(disconnectImg) <span class="kw">or</span> exists(passwordImg):
+        Login()
+        <span class="kw">return</span> <span class="dig">0</span>
+<span class="kw">def</span> Logoff():
+    <span class="skw">type</span>(Key.ESC)
+    <span class="skw">wait</span>(<span class="dig">2</span>)
+    <span class="kw">if</span> <span class="kw">not</span> exists(logoutImg):
+        <span class="skw">type</span>(Key.ESC)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+    <span class="kw">if</span> <span class="kw">not</span> exists(logoutImg):
+        <span class="skw">type</span>(Key.ESC)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+    <span class="kw">if</span> <span class="kw">not</span> exists(logoutImg):
+        <span class="skw">type</span>(Key.ESC)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+    <span class="kw">if</span> exists(logoutImg):
+        <span class="skw">click</span>(logoutImg)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="kw">if</span> exists(logout2Img):
+            <span class="skw">click</span>(logout2Img)
+            <span class="skw">wait</span>(<span class="dig">10</span>)
+login_tries = <span class="dig">0</span>
+<span class="kw">def</span> Login():
+    <span class="kw">global</span> login_tries
+    <span class="kw">if</span> login_tries &gt; <span class="dig">3</span>:
+        PatchGame()
+    <span class="kw">if</span> exists(disconnectImg):
+        <span class="skw">click</span>(disconnectImg)
+    <span class="kw">if</span> exists(loginImg):
+        <span class="skw">click</span>(loginImg)
+        <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">10</span>):
+            <span class="skw">type</span>(Key.BACKSPACE)
+        paste(loginImg, <span class="str">"exile600"</span>)
+    <span class="kw">if</span> exists(passwordImg):
+        <span class="cmt">#click(passwordImg)
+</span>        <span class="cmt">#wait(5)
+</span>        <span class="cmt">#type("massacre")
+</span>        <span class="skw">click</span>(passwordImg)
+        <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">10</span>):
+            <span class="skw">type</span>(Key.BACKSPACE)
+        paste(passwordImg,<span class="str">"massacre"</span>)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">click</span>(loginBtn)
+        <span class="skw">wait</span>(<span class="dig">60</span>)
+    <span class="kw">if</span> exists(playImg):
+        <span class="skw">click</span>(playImg)
+        login_tries = <span class="dig">0</span>
+        <span class="skw">wait</span>(<span class="dig">60</span>)
+    <span class="kw">else</span>:
+        <span class="skw">wait</span>(<span class="dig">60</span>*<span class="dig">30</span>)
+        <span class="kw">if</span> <span class="kw">not</span> exists(playImg):
+            login_tries += <span class="dig">1</span>
+            Login()
+        <span class="kw">else</span>:
+            <span class="skw">click</span>(playImg)
+            <span class="skw">wait</span>(<span class="dig">60</span>)
+    <span class="kw">while</span> <span class="kw">not</span> exists(pressImg) <span class="kw">and</span> exists(HoverOn):
+        <span class="kw">if</span> <span class="kw">not</span> exists(pressImg):
+            <span class="skw">type</span>(<span class="str">'P'</span>)
+            <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">if</span> exists(doffBtn):
+            <span class="skw">click</span>(doffBtn)
+    <span class="kw">if</span> CheckConnection() == <span class="dig">0</span>:
+        <span class="kw">return</span>
+    SafeClick(PersonalImg)
+    <span class="skw">wait</span>(<span class="dig">1</span>)
+    SafeClick(FiltersImg)
+    <span class="skw">wait</span>(<span class="dig">1</span>)
+    SafeClick(FiltersListImg)
+<span class="kw">def</span> CheckCompleted(dep = <span class="str">"science"</span>):
+    <span class="kw">if</span> exists(doffBtn):
+        <span class="skw">click</span>(doffBtn)
+    <span class="kw">if</span> exists(pressImg):
+        <span class="skw">click</span>(pressImg)
+    <span class="kw">if</span> exists(HoverOn):
+        hover(HoverOn)
+    <span class="kw">if</span> exists(completedImg):
+        <span class="skw">click</span>(completedImg)
+        hover(HoverOn)
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">while</span> exists(collectImg):
+            <span class="kw">if</span> exists(collectImg):
+                <span class="skw">click</span>(collectImg)
+                hover(HoverOn)
+                <span class="skw">wait</span>(<span class="dig">7</span>)
+    OpenDepartment(dep)
+<span class="kw">def</span> OpenDepartment(dep):
+    <span class="kw">if</span> exists(pressImg):
+        <span class="skw">click</span>(pressImg)
+    <span class="kw">if</span> exists(HoverOn):
+        hover(HoverOn)
+    <span class="kw">if</span> exists(departmentImg):
+        <span class="skw">click</span>(departmentImg)
+    <span class="kw">if</span> dep == <span class="str">"science"</span> :
+        SafeClick(ScienceImg)
+    <span class="kw">if</span> dep == <span class="str">"medical"</span>:
+        SafeClick(MedicalImg)
+    <span class="kw">if</span> dep == <span class="str">"tactical"</span>:
+        SafeClick(TacticalImg)
+    <span class="kw">if</span> dep == <span class="str">"security"</span>:
+        SafeClick(SecurityImg)
+    <span class="kw">if</span> dep == <span class="str">"engineering"</span>:
+        SafeClick(EngineeringImg)
+    <span class="kw">if</span> dep == <span class="str">"operations"</span>:
+        SafeClick(OperationsImg)
+    <span class="kw">if</span> dep == <span class="str">"first"</span>:
+        SafeClick(FirstOffImg)
+    <span class="kw">if</span> dep == <span class="str">"personal"</span>:
+        SafeClick(PersonalImg)
+    <span class="skw">wait</span>(<span class="dig">10</span>)
+<span class="kw">def</span> MouseHold(img, duration = <span class="dig">.5</span>):
+    hover(img)
+    mouseDown(Button.LEFT)
+    <span class="skw">wait</span>(duration)
+    mouseUp(Button.LEFT)
+<span class="kw">def</span> FindJob(job):
+    SafeClick(job)
+    <span class="skw">wait</span>(<span class="dig">1</span>)
+    SafeClick(beginImg)
+    <span class="kw">if</span> exists(HoverOn):
+        hover(HoverOn)
+<span class="kw">def</span> StartDoff(maxLen):
+    <span class="kw">if</span> <span class="kw">not</span> exists(doffBtn):
+        <span class="skw">type</span>(<span class="str">"P"</span>)
+    <span class="kw">if</span> exists(doffBtn):
+        <span class="skw">click</span>(doffBtn)
+    <span class="kw">if</span> exists(noSlotsImg):
+        hover(noSlotsImg)
+        <span class="kw">return</span>
+    <span class="kw">if</span> exists(pressImg):
+        <span class="skw">click</span>(pressImg)
+        <span class="kw">if</span> exists(HoverOn):
+            hover(HoverOn)
+    <span class="kw">for</span> dep <span class="kw">in</span> departments:
+        <span class="kw">if</span> exists(completedPageImg):
+            SafeClick(doffBtn)
+            CheckCompleted()
+            OpenDepartment(dep)
+        OpenDepartment(dep)
+        <span class="kw">if</span> dep == <span class="str">'personal'</span> <span class="kw">and</span> maxLen == <span class="dig">1</span>:
+            <span class="skw">type</span>(Key.PRINTSCREEN)
+        <span class="kw">if</span> exists(HoverOn):
+            hover(HoverOn)
+        scroll_count = <span class="dig">3</span>
+        <span class="kw">while</span> scroll_count &gt; <span class="dig">0</span>:
+            found = <span class="dig">0</span>
+            <span class="kw">for</span> job <span class="kw">in</span> whitelist:
+                <span class="kw">if</span> job[<span class="dig">1</span>] &gt; maxLen <span class="kw">or</span> job[<span class="dig">2</span>] != dep:
+                    <span class="kw">continue</span>
+                <span class="kw">if</span> exists(job[<span class="dig">0</span>]):
+                    reg = <span class="skw">find</span>(job[<span class="dig">0</span>])
+                    valid = True
+                    <span class="cmt">#for img in unavailableImg:
+</span>                        <span class="cmt">#if reg.exists(img):
+</span>                            <span class="cmt">#reg.highlight(10)
+</span>                            <span class="cmt">#reg.exists(img).highlight(10)
+</span>                            <span class="cmt">#valid = False
+</span>                    <span class="kw">if</span> valid:
+                        FindJob(job[<span class="dig">0</span>])
+                        <span class="skw">wait</span>(<span class="dig">2</span>)
+                        <span class="kw">if</span> exists(noSlotsImg):
+                            CheckCompleted(dep)
+                            <span class="kw">if</span> exists(noSlotsImg):
+                                hover(noSlotsImg)
+                                <span class="kw">return</span>
+                        found += <span class="dig">1</span>
+                        scroll_count = <span class="dig">3</span>
+            <span class="kw">if</span> found == <span class="dig">0</span>:
+                scroll_count -= <span class="dig">1</span>
+                <span class="kw">if</span> exists(scrollImg):
+                    MouseHold(scrollImg)
+                    <span class="skw">wait</span>(<span class="dig">1</span>)
+                <span class="kw">else</span>:
+                    scroll_count = <span class="dig">0</span>
+
+<span class="skw">wait</span>(<span class="dig">5</span>)
+lastDailyCheck = time.time()
+<span class="kw">while</span> True:
+    CheckConnection()
+    SafeClick(doffBtn)
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">5</span>):
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="kw">if</span> <span class="kw">not</span> exists(pressImg) <span class="kw">and</span> exists(HoverOn):
+            <span class="skw">type</span>(<span class="str">'P'</span>)
+            <span class="skw">wait</span>(<span class="dig">5</span>)
+    CheckCompleted()
+    CheckConnection()
+    waiting = <span class="dig">0</span>
+    <span class="kw">while</span> exists(noSlotsImg) <span class="kw">and</span> waiting &lt; <span class="dig">1</span>:
+        <span class="kw">if</span> exists(noSlotsImg):
+            <span class="skw">wait</span>(<span class="dig">60</span>)
+            waiting =+ <span class="dig">1</span>
+            CheckConnection()
+            CheckCompleted()
+    <span class="kw">if</span> COARSE_DOFF:
+        doffLen = [<span class="dig">100</span>]
+    <span class="kw">else</span>:
+        doffLen = [<span class="dig">1</span>,<span class="dig">3</span>,<span class="dig">6</span>,<span class="dig">100</span>]
+    <span class="kw">for</span> i <span class="kw">in</span> doffLen:
+        StartDoff(i)
+        CheckConnection()
+        <span class="kw">if</span> exists(noSlotsImg):
+            <span class="kw">break</span>
+    CheckConnection()
+    CheckAdm()
+    CheckConnection()
+    <span class="kw">if</span> (time.time() - lastDailyCheck) &gt; <span class="dig">2400</span>: <span class="cmt">#40*60 sec</span>
+        CheckRnd()
+        <span class="cmt">#CheckRep()
+</span>        lastDailyCheck = time.time()
+        SafeClick(doffBtn)
+    CheckCompleted()
+    <span class="kw">if</span> exists(noSlotsImg) <span class="kw">and</span> USE_LOGOFF:
+        CheckAdm()
+        Logoff()
+        <span class="skw">wait</span>(randrange(<span class="dig">1800</span>,<span class="dig">3000</span>))
+        Login()
+
+    gc.collect()
+</pre>
+</body>
+</html>

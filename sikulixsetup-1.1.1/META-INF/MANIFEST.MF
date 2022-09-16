@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Built-By: jenkins
+Build-Jdk: 1.7.0_55
+Created-By: Apache Maven 3.2.1
+Main-Class: org.sikuli.setup.RunSetup
+Archiver-Version: Plexus Archiver
+

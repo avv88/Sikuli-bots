@@ -1,0 +1,223 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>QuakeSingleNoExcept.sikuli</h2> <a href="QuakeSingleNoExcept.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="cmt">#setThrowException(False)</span>
+<span class="kw">import</span> java.awt.Toolkit
+<span class="kw">import</span> gc
+<span class="cmt">#Debug.setUserLogFile("c://Sikuli_Log_User.txt")</span>
+<span class="cmt">#Debug.user("text, %1",23)</span>
+Debug.on(<span class="dig">3</span>)
+Debug.setLogFile(<span class="str">"C://Sikuli_Log.txt"</span>)
+faultCounter = <span class="dig">0</span>
+imgPlay = Pattern(<img src="1515451952989.png" />).similar(<span class="dig">0.96</span>)
+imgPlayOffs = Pattern(<img src="1515451952989.png" />).similar(<span class="dig">0.96</span>).targetOffset(<span class="dig">57</span>,-<span class="dig">1</span>)
+imgCustom = Pattern(<img src="1515452091080.png" />).similar(<span class="dig">0.96</span>)
+imgCustomOffs = Pattern(<img src="1515452091080.png" />).similar(<span class="dig">0.96</span>).targetOffset(<span class="dig">46</span>,<span class="dig">0</span>)
+imgModeSelector = Pattern(<img src="imgModeSelector.png" />).similar(<span class="dig">0.80</span>).targetOffset(-<span class="dig">49</span>,-<span class="dig">37</span>)
+imgModeSelectorOffs = Pattern(<img src="imgModeSelector.png" />).similar(<span class="dig">0.80</span>).targetOffset(<span class="dig">16</span>,-<span class="dig">33</span>)
+imgModeOpn = Pattern(<img src="imgModeOpn.png" />).similar(<span class="dig">0.80</span>).targetOffset(-<span class="dig">64</span>,-<span class="dig">12</span>)
+imgModeOpnOffs = Pattern(<img src="imgModeOpn.png" />).similar(<span class="dig">0.80</span>).targetOffset(<span class="dig">1</span>,-<span class="dig">11</span>)
+imgDmIcon = <img src="1515452334096.png" />
+imgModeOK = <img src="1515452349051.png" />
+imgModeOKOffs = Pattern(<img src="1515452349051.png" />).targetOffset(<span class="dig">27</span>,-<span class="dig">2</span>)
+imgStart = <img src="1515452390720.png" />
+imgStartOffs = Pattern(<img src="1515452390720.png" />).targetOffset(<span class="dig">63</span>,-<span class="dig">3</span>)
+imgOKError = <img src="1515495530809.png" />
+imgOKErrorOffs = Pattern(<img src="1515495530809.png" />).targetOffset(<span class="dig">44</span>,-<span class="dig">4</span>)
+imgTeamView = Pattern(<img src="imgTeamView.png" />).targetOffset(<span class="dig">171</span>,<span class="dig">60</span>)
+imgTeamView2 = Pattern(<img src="imgTeamView2.png" />).targetOffset(<span class="dig">186</span>,<span class="dig">44</span>)
+imgLogin = Pattern(<img src="1515509104373.png" />).targetOffset(-<span class="dig">97</span>,<span class="dig">1</span>)
+imgLoginOffs = Pattern(<img src="1515509104373.png" />).targetOffset(<span class="dig">30</span>,<span class="dig">10</span>)
+imgPassword = Pattern(<img src="1515509226400.png" />).targetOffset(-<span class="dig">76</span>,<span class="dig">7</span>)
+imgPasswordOffs = Pattern(<img src="1515509226400.png" />).targetOffset(-<span class="dig">7</span>,<span class="dig">9</span>)
+
+imgLoginBtn = <img src="1515509033316.png" />
+imgLoginBtnOffs = Pattern(<img src="1515509033316.png" />).targetOffset(<span class="dig">57</span>,-<span class="dig">6</span>)
+imgClose = <img src="1515592164379.png" />
+imgCloseOffs = Pattern(<img src="1515592164379.png" />).targetOffset(<span class="dig">33</span>,-<span class="dig">1</span>)
+imgCloseNew = <img src="imgCloseNew.png" />
+imgCloseNewOffs = Pattern(<img src="imgCloseNew.png" />).targetOffset(<span class="dig">33</span>,-<span class="dig">1</span>)
+imgCloseAd = <img src="imgCloseAd.png" />
+imgCloseAdOffs = Pattern(<img src="imgCloseAd.png" />).targetOffset(<span class="dig">34</span>,-<span class="dig">1</span>)
+imgTryAgain = <img src="imgTryAgain.png" />
+imgTryAgainOffs = Pattern(<img src="imgTryAgain.png" />).targetOffset(<span class="dig">29</span>,<span class="dig">0</span>)
+imgDaily = <img src="imgDaily.png" />
+imgDailyOffs = Pattern(<img src="imgDaily.png" />).targetOffset(<span class="dig">33</span>,-<span class="dig">2</span>)
+imgHp = Pattern(<img src="imgHp.png" />).similar(<span class="dig">0.73</span>)
+imgPlayBL =Pattern(<img src="imgPlayBL.png" />).similar(<span class="dig">0.90</span>)
+imgQcTask = Pattern(<img src="imgQcTask.png" />).similar(<span class="dig">0.97</span>)
+imgServer = Pattern(<img src="imgServer.png" />).targetOffset(<span class="dig">176</span>,<span class="dig">0</span>)
+imgServerOffs =  Pattern(<img src="imgServer.png" />).targetOffset(<span class="dig">176</span>,<span class="dig">0</span>)
+imgConnectBtn = Pattern(<img src="imgConnectBtn.png" />).similar(<span class="dig">0.95</span>)
+imgConnectBtnOffs = Pattern(<img src="imgConnectBtn.png" />).similar(<span class="dig">0.95</span>).targetOffset(<span class="dig">48</span>,-<span class="dig">3</span>)
+<span class="kw">def</span> PersistentClick(img, imgOffs):
+    <span class="kw">try</span>:
+        <span class="skw">click</span>(img)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="kw">if</span> exists(img):
+            <span class="skw">click</span>(img)
+            <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="kw">else</span>:
+            <span class="kw">return</span>
+        <span class="kw">if</span> exists(img):
+            <span class="skw">click</span>(imgOffs)
+            <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="kw">else</span>:
+            <span class="kw">return</span>
+        <span class="kw">if</span> exists(img):
+            hover(imgOffs)
+            <span class="skw">wait</span>(<span class="dig">1</span>)
+            mouseDown(Button.LEFT)
+            <span class="skw">wait</span>(<span class="dig">1</span>)
+            mouseUp()
+            <span class="skw">wait</span>(<span class="dig">1</span>)
+    <span class="kw">except</span>:
+        <span class="kw">return</span>
+<span class="kw">while</span> True:
+    <span class="kw">if</span> exists(imgTeamView):
+        App.focus(<span class="str">"Taskmgr"</span>)
+        <span class="skw">click</span>(imgTeamView)
+    <span class="kw">if</span> exists(imgTeamView2):
+        App.focus(<span class="str">"Taskmgr"</span>)
+        <span class="skw">click</span>(imgTeamView2)
+    faultCounter += <span class="dig">1</span>
+    <span class="kw">if</span> exists(imgPlay):
+        PersistentClick(imgPlay, imgPlayOffs)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+    <span class="kw">if</span> exists (imgCustom):
+        PersistentClick(imgCustom, imgCustomOffs)
+    <span class="kw">if</span> exists (imgModeSelector):
+        PersistentClick(imgModeSelector, imgModeSelectorOffs)
+    <span class="kw">if</span> exists (imgModeOpn):
+        PersistentClick(imgModeOpn, imgModeOpnOffs)
+    <span class="kw">if</span> exists(imgDmIcon):
+        PersistentClick(imgModeOK, imgModeOKOffs)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+    <span class="kw">if</span> exists(imgStart):
+        PersistentClick(imgStart, imgStartOffs)
+        <span class="kw">if</span> <span class="kw">not</span> exists(imgStart):
+            faultCounter = <span class="dig">0</span>
+            <span class="cmt">#wait(300)</span>
+    <span class="kw">while</span> exists(imgHp):
+        keyDown(<span class="str">"f"</span>)
+        <span class="skw">wait</span>(<span class="dig">3</span>)
+        keyUp()
+    <span class="kw">if</span> exists(imgOKError): <span class="cmt">#разные ошибки</span>
+        PersistentClick(imgOKError, imgOKErrorOffs)
+    <span class="kw">if</span> exists(imgLoginBtn): <span class="cmt">#выкинуло из аккаунта</span>
+        PersistentClick(imgLogin, imgLoginOffs)
+        <span class="skw">type</span>(<span class="str">"JcJet"</span>)
+        PersistentClick(imgPassword, imgPasswordOffs)
+        <span class="skw">type</span>(<span class="str">"Massacre579"</span>)
+        PersistentClick(imgLoginBtn, imgLoginBtnOffs)
+        <span class="skw">wait</span>(<span class="dig">60</span>)
+    <span class="kw">if</span> exists(imgClose): <span class="cmt">#разные сообщения и ошибки</span>
+        PersistentClick(imgClose, imgCloseOffs)
+    <span class="kw">if</span> exists(imgTryAgain): <span class="cmt">#дисконнект</span>
+        PersistentClick(imgTryAgain, imgTryAgainOffs)
+    <span class="kw">if</span> exists(imgCloseAd):
+        PersistentClick(imgCloseAd, imgCloseAdOffs)
+    <span class="kw">if</span> exists(imgDaily):
+        PersistentClick(imgDaily, imgDailyOffs)
+        <span class="skw">wait</span>(<span class="dig">10</span>)
+    <span class="kw">if</span> exists(imgCloseNew):
+        PersistentClick(imgCloseNew, imgCloseNewOffs)
+        <span class="skw">wait</span>(<span class="dig">3</span>)
+    <span class="kw">if</span> exists(imgServer):
+        <span class="kw">while</span> <span class="kw">not</span> exists (imgConnectBtn):
+            <span class="skw">click</span>(imgServer)
+        PersistentClick(imgConnectBtn, imgConnectBtnOffs)
+    <span class="kw">if</span> faultCounter &gt; <span class="dig">50</span>:
+        App.focus(<span class="str">"Taskmgr"</span>)
+        <span class="kw">if</span> exists(imgQcTask):
+            <span class="skw">click</span>(imgQcTask)
+            <span class="skw">wait</span>(<span class="dig">2</span>)
+            <span class="skw">type</span>(Key.DELETE)
+            <span class="skw">wait</span>(<span class="dig">30</span>)
+        App.focus(<span class="str">"BethesdaNetLauncher"</span>)
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">if</span> exists(imgPlayBL):
+            <span class="skw">click</span>(imgPlayBL)
+            <span class="skw">wait</span>(<span class="dig">5</span>)
+            <span class="kw">if</span> exists(imgPlayBL):
+                <span class="skw">click</span>(imgPlayBL)
+            <span class="skw">wait</span>(<span class="dig">250</span>)
+            App.focus(<span class="str">"Диспетчер"</span>)
+            App.focus(<span class="str">"Quake Champions"</span>)
+    <span class="kw">if</span> faultCounter &gt; <span class="dig">100</span>:
+        <span class="kw">while</span> True:
+            <span class="skw">wait</span>(<span class="dig">5</span>)
+            java.awt.Toolkit.getDefaultToolkit().beep()
+    gc.collect()
+</pre>
+</body>
+</html>

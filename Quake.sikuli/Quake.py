@@ -1,0 +1,37 @@
+setThrowException(False)
+while True:
+    if exists(Pattern("1515335304302.png").similar(0.96)):
+        App.focus("WordPad")
+        click(Pattern("1515335304302.png").similar(0.96))
+        wait(2)
+        click(Pattern("1515335304302.png").similar(0.96).targetOffset(71,-3))
+        hover(Pattern("1515335304302.png").similar(0.96))
+        wait(2)
+        mouseDown(Button.LEFT)
+        wait(2)
+        mouseUp()
+        wait(5)
+    if exists("1515335370757.png"):
+        App.focus("WordPad")
+        click("1515335370757.png")
+        wait(2)
+        click(Pattern("1515335370757.png").targetOffset(52,-3))
+        hover("1515335370757.png")
+        wait(2)
+        mouseDown(Button.LEFT)
+        wait(2)
+        mouseUp()
+        
+    if exists("1515335583798.png"):
+        App.focus("WordPad")
+        doubleClick("1515335583798.png")
+        wait(3)
+        type(Key.ESC)
+        wait(2)
+    if exists("1515335670756.png"):
+        hover("1515335670756.png")
+        wait(2)
+        mouseDown(Button.LEFT)
+        wait(2)
+        mouseUp()
+        wait(60)

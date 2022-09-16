@@ -1,0 +1,103 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>sto_ffa.sikuli</h2> <a href="sto_ffa.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> java.awt.Toolkit
+cant = Pattern(<img src="cant.png" />).similar(<span class="dig">0.82</span>)
+<span class="skw">wait</span>(<span class="dig">5</span>)
+idle = <span class="dig">0</span>
+<span class="kw">def</span> MouseHold(img, duration = <span class="dig">.5</span>):
+    hover(img)
+    mouseDown(Button.LEFT)
+    <span class="skw">wait</span>(duration)
+    mouseUp(Button.LEFT)
+<span class="kw">while</span> True:
+    <span class="kw">if</span> <span class="kw">not</span> exists(Pattern(<img src="1600933850283.png" />).similar(<span class="dig">0.84</span>)):
+        java.awt.Toolkit.getDefaultToolkit().beep()
+    <span class="kw">if</span> <span class="kw">not</span> exists(<img src="1600927991934.png" />) <span class="kw">or</span> exists(Pattern(<img src="1600928444835.png" />).similar(<span class="dig">0.79</span>)):
+        <span class="skw">wait</span>(<span class="dig">60</span>)
+        idle += <span class="dig">1</span>
+        <span class="kw">if</span> idle &gt;= <span class="dig">30</span>:
+            <span class="skw">type</span>(Key.SPACE)
+            idle = <span class="dig">0</span>
+        <span class="kw">continue</span>
+    <span class="skw">wait</span>(<span class="dig">60</span>*<span class="dig">29</span>)
+    <span class="kw">while</span> exists(cant):
+        <span class="skw">click</span>(<img src="1600928148231.png" />)
+        <span class="skw">wait</span>(<span class="dig">60</span>)
+        <span class="skw">click</span>(Pattern(<img src="1600928621802.png" />).targetOffset(-<span class="dig">7</span>,-<span class="dig">42</span>))
+        <span class="kw">if</span> exists(cant):
+            <span class="kw">break</span>
+    <span class="kw">if</span> exists(<img src="1600928322302.png" />):
+        MouseHold(Pattern(<img src="1600928345404.png" />).similar(<span class="dig">0.95</span>).targetOffset(-<span class="dig">103</span>,-<span class="dig">2</span>))
+</pre>
+</body>
+</html>
